@@ -1,0 +1,24 @@
+
+/* Class = "UITextField"; placeholder = "Введите логин"; ObjectID = "4lC-HK-H2z"; */
+"4lC-HK-H2z.placeholder" = "Введите логин";
+
+/* Class = "UITextField"; placeholder = "Введите пароль"; ObjectID = "7qI-Sz-c7y"; */
+"7qI-Sz-c7y.placeholder" = "Введите пароль";
+
+/* Class = "UILabel"; text = "Логин"; ObjectID = "Gf4-tB-PpD"; */
+"Gf4-tB-PpD.text" = "Логин";
+
+/* Class = "UITabBarItem"; title = "Группы"; ObjectID = "KX1-86-4v3"; */
+"KX1-86-4v3.title" = "Группы";
+
+/* Class = "UILabel"; text = "Пароль"; ObjectID = "L2R-Fj-OSH"; */
+"L2R-Fj-OSH.text" = "Пароль";
+
+/* Class = "UITabBarItem"; title = "Друзья"; ObjectID = "YU1-Nz-Mjo"; */
+"YU1-Nz-Mjo.title" = "Друзья";
+
+/* Class = "UIButton"; normalTitle = "Войти"; ObjectID = "fSD-Q1-wUI"; */
+"fSD-Q1-wUI.normalTitle" = "Войти";
+
+/* Class = "UILabel"; text = "VK Client"; ObjectID = "nsC-ID-5Yp"; */
+"nsC-ID-5Yp.text" = "Соцсеть Vmeste";
