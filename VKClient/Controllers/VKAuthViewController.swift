@@ -15,7 +15,7 @@ class VKAuthViewController: UIViewController {
         }
     }
     
-    let fromAuthVKToTabBarSegueIdentifier = "fromAuthVKToTabBar"
+    let fromAuthVKToLoginViewSegueIdentifier = "fromAuthVKToLoginView"
     let apiVKService = VKService()
     
     override func viewDidLoad() {
@@ -88,6 +88,6 @@ extension VKAuthViewController: WKNavigationDelegate {
         }
         
         decisionHandler(.cancel)
-        performSegue(withIdentifier: fromAuthVKToTabBarSegueIdentifier, sender: nil)
+        performSegue(withIdentifier: fromAuthVKToLoginViewSegueIdentifier, sender: nil)
     }
 }

@@ -209,7 +209,7 @@
                     </view>
                     <connections>
                         <outlet property="authVKWebView" destination="GQP-8H-tnP" id="ImD-PA-4zY"/>
-                        <segue destination="U3z-0s-M2O" kind="presentation" identifier="fromAuthVKToTabBar" modalPresentationStyle="fullScreen" id="hkk-b4-84l"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="fromAuthVKToLoginView" animates="NO" modalPresentationStyle="fullScreen" id="Ozt-TC-WZl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t3B-N7-HuN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -506,9 +506,6 @@
             <point key="canvasLocation" x="1880" y="1164"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="3Of-fC-uNr"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="newspaper" catalog="system" width="128" height="108"/>
         <image name="person.3" catalog="system" width="128" height="62"/>
