@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uNo-cd-1bP">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
@@ -179,7 +179,42 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5.7971014492753632" y="105.80357142857143"/>
+            <point key="canvasLocation" x="61" y="808"/>
+        </scene>
+        <!--Auth View Controller-->
+        <scene sceneID="gsn-By-ZHj">
+            <objects>
+                <viewController id="uNo-cd-1bP" customClass="VKAuthViewController" customModule="VKClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fO2-ex-MeU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GQP-8H-tnP">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ho3-UV-Ed0"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ho3-UV-Ed0" firstAttribute="trailing" secondItem="GQP-8H-tnP" secondAttribute="trailing" id="31g-nV-ivA"/>
+                            <constraint firstItem="GQP-8H-tnP" firstAttribute="leading" secondItem="ho3-UV-Ed0" secondAttribute="leading" id="R2u-UA-hRp"/>
+                            <constraint firstItem="ho3-UV-Ed0" firstAttribute="bottom" secondItem="GQP-8H-tnP" secondAttribute="bottom" id="Vcz-qJ-3KE"/>
+                            <constraint firstItem="GQP-8H-tnP" firstAttribute="top" secondItem="ho3-UV-Ed0" secondAttribute="top" id="XvB-VX-THV"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="authVKWebView" destination="GQP-8H-tnP" id="ImD-PA-4zY"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="fromAuthVKToLoginView" animates="NO" modalPresentationStyle="fullScreen" id="Ozt-TC-WZl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t3B-N7-HuN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="61" y="106"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="p4z-zk-ASO">
