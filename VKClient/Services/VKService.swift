@@ -13,6 +13,8 @@ class VKService {
     let baseUrl = "https://api.vk.com/method/"
     let version = "5.131"
     
+    let token = Session.shared.token
+    
     //MARK: - Возвращает список идентификаторов друзей пользователя или расширенную информацию о друзьях пользователя (при использовании параметра fields) https://vk.com/dev/friends.get
     
     func getFriendsList(by userId: Int?, completion: @escaping (Any?) -> ()) {
@@ -26,7 +28,7 @@ class VKService {
             //"count": ,
             //"offset": ,
             //"ref": ,
-            "access_token": Session.shared.token,
+            "access_token": token,
             "v": version
         ]
         
@@ -54,7 +56,7 @@ class VKService {
             //"no_service_albums": ,
             //"need_hidden": ,
             //"skip_hidden": ,
-            "access_token": Session.shared.token,
+            "access_token": token,
             "v": version
         ]
         
@@ -80,7 +82,7 @@ class VKService {
             //"fields": ,
             //"offset": ,
             //"count": ,
-            "access_token": Session.shared.token,
+            "access_token": token,
             "v": version
         ]
         
@@ -110,7 +112,7 @@ class VKService {
             //"sort": ,
             //"offset": ,
             //"count": ,
-            "access_token": Session.shared.token,
+            "access_token": token,
             "v": version
         ]
         
