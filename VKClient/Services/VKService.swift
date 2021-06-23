@@ -13,22 +13,20 @@ class VKService {
     let baseUrl = "https://api.vk.com/method/"
     let version = "5.131"
     
-    let token = Session.shared.token
-    
     //MARK: - Возвращает список идентификаторов друзей пользователя или расширенную информацию о друзьях пользователя (при использовании параметра fields) https://vk.com/dev/friends.get
     
-    func getFriendsList(by userId: Int?, completion: @escaping (Any?) -> ()) {
+    func getFriendsList(by userId: Int?, completion: @escaping ([Friend]) -> ()) {
         let method = "friends.get"
         
         var parameters: Parameters = [
             //"order": "name",
-            //"fields": "photo_50",
+            "fields": "photo_50",
             //"name_case": "nom",
             //"list_id": ,
-            //"count": ,
+            "count": "100",
             //"offset": ,
             //"ref": ,
-            "access_token": token,
+            "access_token": Session.shared.token,
             "v": version
         ]
         
@@ -38,8 +36,13 @@ class VKService {
         
         let url = baseUrl + method
         
-        AF.request(url, method: .get, parameters: parameters).responseJSON { response in
-            completion(response.value)
+        AF.request(url, method: .get, parameters: parameters).responseData { response in
+            guard let data = response.value else { return }
+            let friendsResponse = try? JSONDecoder().decode(Friends.self, from: data).response
+            guard let friends = friendsResponse?.items else { return }
+            DispatchQueue.main.async {
+                completion(friends)
+            }
         }
     }
     
@@ -56,7 +59,7 @@ class VKService {
             //"no_service_albums": ,
             //"need_hidden": ,
             //"skip_hidden": ,
-            "access_token": token,
+            "access_token": Session.shared.token,
             "v": version
         ]
         
@@ -67,7 +70,8 @@ class VKService {
         let url = baseUrl + method
         
         AF.request(url, method: .get, parameters: parameters).responseJSON { response in
-            completion(response.value)
+            guard let data = response.value else { return }
+            completion(data)
         }
     }
     
@@ -82,7 +86,7 @@ class VKService {
             //"fields": ,
             //"offset": ,
             //"count": ,
-            "access_token": token,
+            "access_token": Session.shared.token,
             "v": version
         ]
         
@@ -93,7 +97,8 @@ class VKService {
         let url = baseUrl + method
         
         AF.request(url, method: .get, parameters: parameters).responseJSON { response in
-            completion(response.value)
+            guard let data = response.value else { return }
+            completion(data)
         }
     }
     
@@ -112,14 +117,15 @@ class VKService {
             //"sort": ,
             //"offset": ,
             //"count": ,
-            "access_token": token,
+            "access_token": Session.shared.token,
             "v": version
         ]
         
         let url = baseUrl + method
         
         AF.request(url, method: .get, parameters: parameters).responseJSON { response in
-            completion(response.value)
+            guard let data = response.value else { return }
+            completion(data)
         }
     }
 }

@@ -9,23 +9,6 @@ import UIKit
 
 class TabBarController: UITabBarController {
     
-    func fillFriendsArray() {
-        DataStorage.shared.friendsArray = [
-            User(firstName: "Кирилл", secondName: "Копытин", photos: [UIImage(named: "photo1")!, UIImage(named: "photo2")!], avatar: UIImage(named: "user1")),
-            User(firstName: "Анна", secondName: "Плетнева", photos: nil, avatar: UIImage(named: "user2")),
-            User(firstName: "Алла", secondName: "Пугачева", photos: [UIImage(named: "photo3")!, UIImage(named: "photo4")!], avatar: UIImage(named: "user3")),
-            User(firstName: "Филипп", secondName: "Киркоров", photos: nil, avatar: UIImage(named: "user4")),
-            User(firstName: "Наталья", secondName: "Иванова", photos: nil, avatar: nil),
-            User(firstName: "Павел", secondName: "Дуров", photos: [UIImage(named: "photo1")!, UIImage(named: "photo2")!, UIImage(named: "photo3")!, UIImage(named: "photo4")!, UIImage(named: "photo5")!], avatar: UIImage(named: "user5")),
-            User(firstName: "Уилл", secondName: "Смит", photos: nil, avatar: UIImage(named: "user6")),
-            User(firstName: "Михаил", secondName: "Задорнов", photos: nil, avatar: UIImage(named: "user7")),
-            User(firstName: "Олег", secondName: "Пронин", photos: [UIImage(named: "photo6")!, UIImage(named: "photo7")!], avatar: nil),
-            User(firstName: "Ирина", secondName: "Казакова", photos: nil, avatar: UIImage(named: "user8")),
-            User(firstName: "Анджелина", secondName: "Джоли", photos: [UIImage(named: "photo8")!, UIImage(named: "photo9")!, UIImage(named: "photo10")!], avatar: UIImage(named: "user9")),
-            User(firstName: "Иван", secondName: "Горлов", photos: [UIImage(named: "photo7")!], avatar: UIImage(named: "user10"))
-        ]
-    }
-    
     func fillAllGroupsArray() {
         DataStorage.shared.allGroupsArray = [
             Group(name: "Комиксы BUBBLE", avatar: UIImage(named: "bubble")),
@@ -52,7 +35,6 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         
         fillNewsArray()
-        fillFriendsArray()
         fillAllGroupsArray()
     }
 }
