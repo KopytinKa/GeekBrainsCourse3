@@ -21,6 +21,10 @@ class VKAuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        oauthAuthorizationToVK()
+    }
+    
+    func oauthAuthorizationToVK() {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "oauth.vk.com"
@@ -30,6 +34,7 @@ class VKAuthViewController: UIViewController {
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
             URLQueryItem(name: "scope", value: "262150"),
+            URLQueryItem(name: "revoke", value: "1"),
             URLQueryItem(name: "response_type", value: "token"),
         ]
         
@@ -57,12 +62,13 @@ extension VKAuthViewController: WKNavigationDelegate {
                 return dict
         }
         
-        guard let token = params["access_token"] else {
+        guard let token = params["access_token"], let userId = params["user_id"] else {
             decisionHandler(.allow)
             return
         }
         
         Session.shared.token = token
+        Session.shared.userId = userId
         
         //MARK: - Тестовые запросы к АПИ
         print("My token: \(token)")
@@ -87,7 +93,8 @@ extension VKAuthViewController: WKNavigationDelegate {
             print(value as Any)
         }
         
-        decisionHandler(.cancel)
         performSegue(withIdentifier: fromAuthVKToLoginViewSegueIdentifier, sender: nil)
+        
+        decisionHandler(.cancel)
     }
 }
