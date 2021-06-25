@@ -5,7 +5,7 @@
 //  Created by Кирилл Копытин on 23.06.2021.
 //
 
-import UIKit
+import Foundation
 
 struct Friends: Codable {
     let response: ResponseFriends

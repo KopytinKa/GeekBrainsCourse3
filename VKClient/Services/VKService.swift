@@ -12,6 +12,7 @@ class VKService {
     
     let baseUrl = "https://api.vk.com/method/"
     let version = "5.131"
+    var ownerId = Session.shared.userId
     
     //MARK: - Возвращает список идентификаторов друзей пользователя или расширенную информацию о друзьях пользователя (при использовании параметра fields) https://vk.com/dev/friends.get
     
@@ -48,30 +49,33 @@ class VKService {
     
     //MARK: - Возвращает все фотографии пользователя или сообщества в антихронологическом порядке https://vk.com/dev/photos.getAll
     
-    func getPhotos(by ownerId: Int?, completion: @escaping (Any?) -> ()) {
-        let method = "photos.getAll"
+    func getPhotos(by ownerId: Int, completion: @escaping ([Photo]) -> ()) {
+        let method = "photos.get"
         
-        var parameters: Parameters = [
+        let parameters: Parameters = [
+            "user_id": ownerId,
             "extended": 1,
+            "album_id": "profile",
+            //"photo_ids": ,
+            "rev": 1,
+            //"feed_type": ,
+            //"feed": ,
             //"offset": ,
-            //"count": ,
+            "count": "10",
             //"photo_sizes": ,
-            "no_service_albums": 1,
-            //"need_hidden": ,
-            //"skip_hidden": ,
             "access_token": Session.shared.token,
             "v": version
         ]
         
-        if let ownerId = ownerId {
-            parameters["ownerId"] = ownerId
-        }
-        
         let url = baseUrl + method
         
-        AF.request(url, method: .get, parameters: parameters).responseJSON { response in
+        AF.request(url, method: .get, parameters: parameters).responseData { response in
             guard let data = response.value else { return }
-            completion(data)
+            let photosResponse = try? JSONDecoder().decode(Photos.self, from: data).response
+            guard let photos = photosResponse?.items else { return }
+            DispatchQueue.main.async {
+                completion(photos)
+            }
         }
     }
     

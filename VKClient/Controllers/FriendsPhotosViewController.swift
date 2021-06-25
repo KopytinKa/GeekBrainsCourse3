@@ -11,17 +11,29 @@ class FriendsPhotosViewController: UIViewController {
 
     @IBOutlet weak var friendPhotosCollectionView: UICollectionView!
     
-    var photos = [UIImage]()
+    var photos = [Photo]()
+    var friendId:Int = 0
+    
+    let apiVKService = VKService()
     
     let friendPhotosCollectionViewCellIdentifier = "FriendPhotosCollectionViewCellIdentifier"
     let fromFriendsPhotosToGallerySegueIdentifier = "fromPhotosToGallery"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setPhotosBy(userId: friendId)
 
         friendPhotosCollectionView.dataSource = self
         friendPhotosCollectionView.delegate = self
         friendPhotosCollectionView.register(UINib(nibName: "FriendPhotosCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: friendPhotosCollectionViewCellIdentifier)
+    }
+    
+    func setPhotosBy(userId: Int) {
+        apiVKService.getPhotos(by: userId) { photos in
+            self.photos = photos
+            self.friendPhotosCollectionView.reloadData()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -47,9 +59,9 @@ extension FriendsPhotosViewController: UICollectionViewDataSource, UICollectionV
             return UICollectionViewCell()
         }
     
-        let image = photos[indexPath.row]
+        let photo = photos[indexPath.row]
         
-        cell.configure(photo: image)
+        cell.configure(photo: photo)
         
         return cell
     }

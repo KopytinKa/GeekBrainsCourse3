@@ -24,14 +24,22 @@ class FriendPhotosCollectionViewCell: UICollectionViewCell {
     func clearCell() {
         friendPhotoImageView.image = nil
         heartImageView.image = UIImage(systemName: "heart")
-        countLabel.text = "34"
+        countLabel.text = "0"
     }
     
-    func configure(photo: UIImage?) {
-        if let photo = photo {
-            friendPhotoImageView.image = photo
+    func configure(photo: Photo) {
+        if photo.likes.userLikes > 0 {
+            isTap = true
+            heartImageView.image = UIImage(systemName: "heart.fill")
         }
-        likeButton.addTarget(self, action: #selector(onTap), for: .touchUpInside)
+        
+        for photoArray in photo.sizes {
+            if photoArray.type == "m" {
+                friendPhotoImageView.sd_setImage(with: URL(string: photoArray.url))
+                countLabel.text = String(photo.likes.count)
+                likeButton.addTarget(self, action: #selector(onTap), for: .touchUpInside)
+            }
+        }
     }
     
     @objc func onTap() {

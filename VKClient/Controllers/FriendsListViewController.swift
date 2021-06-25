@@ -84,9 +84,7 @@ class FriendsListViewController: UIViewController {
             guard let indexPath = sender as? IndexPath else { return }
             let friend = arrayByLetter(letter: arrayLetter()[indexPath.section])[indexPath.row]
             
-//            if let friendPhotos = friend.photos {
-//                friendsPhotosViewController.photos = friendPhotos
-//            }
+            friendsPhotosViewController.friendId = friend.id
         }
     }
 }

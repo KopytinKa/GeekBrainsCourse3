@@ -5,7 +5,7 @@
 //  Created by Кирилл Копытин on 01.06.2021.
 //
 
-import UIKit
+import Foundation
 
 final class DataStorage {
     static let shared = DataStorage()
