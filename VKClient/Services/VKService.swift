@@ -12,7 +12,6 @@ class VKService {
     
     let baseUrl = "https://api.vk.com/method/"
     let version = "5.131"
-    var ownerId = Session.shared.userId
     
     //MARK: - Возвращает список идентификаторов друзей пользователя или расширенную информацию о друзьях пользователя (при использовании параметра fields) https://vk.com/dev/friends.get
     
@@ -47,7 +46,7 @@ class VKService {
         }
     }
     
-    //MARK: - Возвращает все фотографии пользователя или сообщества в антихронологическом порядке https://vk.com/dev/photos.getAll
+    //MARK: - Возвращает список фотографий в альбоме https://vk.com/dev/photos.get
     
     func getPhotos(by ownerId: Int, completion: @escaping ([Photo]) -> ()) {
         let method = "photos.get"
