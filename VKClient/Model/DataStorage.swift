@@ -12,7 +12,5 @@ final class DataStorage {
     
     private init() {}
     
-    var allGroupsArray = [Group]()
-    var myGroupsArray = [Group]()
     var newsArray = [News]()
 }

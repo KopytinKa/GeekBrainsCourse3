@@ -23,7 +23,7 @@ class VKService {
             "fields": "photo_50",
             //"name_case": "nom",
             //"list_id": ,
-            "count": "100",
+            //"count": "100",
             //"offset": ,
             //"ref": ,
             "access_token": Session.shared.token,
@@ -52,11 +52,11 @@ class VKService {
         let method = "photos.getAll"
         
         var parameters: Parameters = [
-            //"extended": ,
+            "extended": 1,
             //"offset": ,
             //"count": ,
             //"photo_sizes": ,
-            //"no_service_albums": ,
+            "no_service_albums": 1,
             //"need_hidden": ,
             //"skip_hidden": ,
             "access_token": Session.shared.token,
@@ -77,12 +77,12 @@ class VKService {
     
     //MARK: - Возвращает список сообществ указанного пользователя https://vk.com/dev/groups.get
     
-    func getGroupsList(by userId: Int?, completion: @escaping (Any?) -> ()) {
+    func getGroupsList(by userId: Int?, completion: @escaping ([Group]) -> ()) {
         let method = "groups.get"
         
         var parameters: Parameters = [
             "extended": 1,
-            //"filter": ,
+            //"filter": "publics",
             //"fields": ,
             //"offset": ,
             //"count": ,
@@ -96,15 +96,19 @@ class VKService {
         
         let url = baseUrl + method
         
-        AF.request(url, method: .get, parameters: parameters).responseJSON { response in
+        AF.request(url, method: .get, parameters: parameters).responseData { response in
             guard let data = response.value else { return }
-            completion(data)
+            let groupsResponse = try? JSONDecoder().decode(Groups.self, from: data).response
+            guard let groups = groupsResponse?.items else { return }
+            DispatchQueue.main.async {
+                completion(groups)
+            }
         }
     }
     
     //MARK: - Осуществляет поиск сообществ по заданной подстроке https://vk.com/dev/groups.search
     
-    func getGroupsListWith(query: String, completion: @escaping (Any?) -> ()) {
+    func getGroupsListWith(query: String, completion: @escaping ([Group]) -> ()) {
         let method = "groups.search"
         
         let parameters: Parameters = [
@@ -116,16 +120,20 @@ class VKService {
             //"market": ,
             //"sort": ,
             //"offset": ,
-            //"count": ,
+            "count": "100",
             "access_token": Session.shared.token,
             "v": version
         ]
         
         let url = baseUrl + method
         
-        AF.request(url, method: .get, parameters: parameters).responseJSON { response in
+        AF.request(url, method: .get, parameters: parameters).responseData { response in
             guard let data = response.value else { return }
-            completion(data)
+            let groupsResponse = try? JSONDecoder().decode(Groups.self, from: data).response
+            guard let groups = groupsResponse?.items else { return }
+            DispatchQueue.main.async {
+                completion(groups)
+            }
         }
     }
 }

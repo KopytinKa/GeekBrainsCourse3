@@ -10,21 +10,14 @@ import UIKit
 class GroupsSearchViewController: UIViewController {
     
     @IBOutlet weak var groupsSearchTableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     let groupTableViewCellIdentifier = "GroupTableViewCellIdentifier"
     let addGroupSegueIdentifier = "addGroup"
-
     
-    var groups = [
-        Group(name: "Комиксы BUBBLE", avatar: UIImage(named: "bubble")),
-        Group(name: "Любители собак", avatar: nil),
-        Group(name: "Азбука - графические романы", avatar: UIImage(named: "azbuka")),
-        Group(name: "Издательство Сокол", avatar: UIImage(named: "sokol")),
-        Group(name: "Бегуны", avatar: nil),
-        Group(name: "Магазин комиксов Сomic Street", avatar: UIImage(named: "comic_street")),
-        Group(name: "Eaglemoss", avatar: UIImage(named: "eaglemoss")),
-        Group(name: "Любители кошек", avatar: UIImage(named: "cats"))
-    ]
+    let apiVKService = VKService()
+    
+    var searchGroups = [Group]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,12 +25,14 @@ class GroupsSearchViewController: UIViewController {
         groupsSearchTableView.dataSource = self
         groupsSearchTableView.delegate = self
         groupsSearchTableView.register(UINib(nibName: "GroupTableViewCell", bundle: nil), forCellReuseIdentifier: groupTableViewCellIdentifier)
+        
+        searchBar.delegate = self
     }
 }
 
 extension GroupsSearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return DataStorage.shared.allGroupsArray.count
+        return searchGroups.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -47,7 +42,7 @@ extension GroupsSearchViewController: UITableViewDataSource, UITableViewDelegate
             return UITableViewCell()
         }
         
-        let group = DataStorage.shared.allGroupsArray[indexPath.row]
+        let group = searchGroups[indexPath.row]
 
         cell.configure(group: group)
         
@@ -56,5 +51,16 @@ extension GroupsSearchViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: addGroupSegueIdentifier, sender: nil)
+    }
+}
+
+extension GroupsSearchViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if !searchText.isEmpty {
+            apiVKService.getGroupsListWith(query: searchText) { groups in
+                self.searchGroups = groups
+                self.groupsSearchTableView.reloadData()
+            }
+        }
     }
 }

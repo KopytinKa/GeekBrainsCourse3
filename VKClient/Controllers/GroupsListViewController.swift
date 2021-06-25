@@ -13,12 +13,25 @@ class GroupsListViewController: UIViewController {
     
     let groupTableViewCellIdentifier = "GroupTableViewCellIdentifier"
     let addGroupSegueIdentifier = "addGroup"
+    
+    let apiVKService = VKService()
+    
+    var groups = [Group]()
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setGroups()
 
         groupsListTableView.dataSource = self
         groupsListTableView.register(UINib(nibName: "GroupTableViewCell", bundle: nil), forCellReuseIdentifier: groupTableViewCellIdentifier)
+    }
+    
+    func setGroups() {
+        apiVKService.getGroupsList(by: nil) { groups in
+            self.groups = groups
+            self.groupsListTableView.reloadData()
+        }
     }
     
     @IBAction func addGroup(segue: UIStoryboardSegue) {
@@ -26,10 +39,10 @@ class GroupsListViewController: UIViewController {
             guard let groupSearchViewController = segue.source as? GroupsSearchViewController else { return }
             
             if let indexPath = groupSearchViewController.groupsSearchTableView.indexPathForSelectedRow {
-                let group = DataStorage.shared.allGroupsArray[indexPath.row]
+                let group = groupSearchViewController.searchGroups[indexPath.row]
                 
-                if !DataStorage.shared.myGroupsArray.contains(group) {
-                    DataStorage.shared.myGroupsArray.append(group)
+                if !groups.contains(group) {
+                    groups.append(group)
                     groupsListTableView.reloadData()
                 }
             }
@@ -39,7 +52,7 @@ class GroupsListViewController: UIViewController {
 
 extension GroupsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return DataStorage.shared.myGroupsArray.count
+        return groups.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -49,7 +62,7 @@ extension GroupsListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let group = DataStorage.shared.myGroupsArray[indexPath.row]
+        let group = groups[indexPath.row]
         
         cell.configure(group: group)
         
@@ -59,7 +72,7 @@ extension GroupsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 
         if editingStyle == .delete {
-            DataStorage.shared.myGroupsArray.remove(at: indexPath.row)
+            groups.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }

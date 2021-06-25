@@ -8,10 +8,10 @@
 import UIKit
 
 struct Friends: Codable {
-    let response: Response
+    let response: ResponseFriends
 }
 
-struct Response: Codable {
+struct ResponseFriends: Codable {
     let count: Int
     let items: [Friend]
 }

@@ -25,16 +25,20 @@ class FriendsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        apiVKService.getFriendsList(by: nil) { friends in
-            self.friends = friends
-            self.friendsListTableView.reloadData()
-        }
+        setFriends()
 
         friendsListTableView.dataSource = self
         friendsListTableView.delegate = self
         friendsListTableView.register(UINib(nibName: "FriendTableViewCell", bundle: nil), forCellReuseIdentifier: friendTableViewCellIdentifier)
         
         searchBar.delegate = self
+    }
+    
+    func setFriends() {
+        apiVKService.getFriendsList(by: nil) { friends in
+            self.friends = friends
+            self.friendsListTableView.reloadData()
+        }
     }
     
     func getMyFriends() -> [Friend] {

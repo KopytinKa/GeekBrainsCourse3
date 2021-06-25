@@ -22,12 +22,7 @@ class GroupTableViewCell: UITableViewCell {
     
     func configure(group: Group) {
         nameLabel.text = group.name
-        
-        if let avatar = group.avatar {
-            avatarImageView.image = avatar
-        } else {
-            avatarImageView.image = UIImage(named: "community")
-        }
+        avatarImageView.sd_setImage(with: URL(string: group.avatar), placeholderImage: UIImage(named: "community"))
     }
     
     override func prepareForReuse() {
