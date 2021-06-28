@@ -6,6 +6,7 @@
 //
 import UIKit
 import WebKit
+import SwiftKeychainWrapper
 
 class VKAuthViewController: UIViewController {
 
@@ -66,11 +67,19 @@ extension VKAuthViewController: WKNavigationDelegate {
             return
         }
         
+        KeychainWrapper.standard.set(token, forKey: "token")
         Session.shared.token = token
+        
+        UserDefaults.standard.set(userId, forKey: "userId")
         Session.shared.userId = userId
         
-        performSegue(withIdentifier: fromAuthVKToLoginViewSegueIdentifier, sender: nil)
+        showLoginView()
         
         decisionHandler(.cancel)
     }
+    
+    func showLoginView() {
+        performSegue(withIdentifier: fromAuthVKToLoginViewSegueIdentifier, sender: nil)
+    }
+
 }
