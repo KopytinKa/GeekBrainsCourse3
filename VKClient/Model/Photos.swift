@@ -1,4 +1,5 @@
 import Foundation
+import RealmSwift
 
 // MARK: - Welcome
 struct Photos: Codable {
@@ -12,10 +13,12 @@ struct ResponsePhotos: Codable {
 }
 
 // MARK: - Item
-struct Photo: Codable {
-    let albumID, id, ownerID: Int
-    let sizes: [Size]
-    let likes: Likes
+class Photo: Object, Codable {
+    @objc dynamic var albumID: Int = 0
+    @objc dynamic var id: Int = 0
+    @objc dynamic var ownerID: Int = 0
+    dynamic var sizes: [Size]
+    dynamic var likes: Likes
 
     enum CodingKeys: String, CodingKey {
         case albumID = "album_id"
@@ -23,11 +26,16 @@ struct Photo: Codable {
         case ownerID = "owner_id"
         case sizes, likes
     }
+    
+    override static func ignoredProperties() -> [String] {
+        return ["sizes", "likes"]
+    }
 }
 
 // MARK: - Likes
-struct Likes: Codable {
-    let userLikes, count: Int
+class Likes: Object, Codable {
+    @objc dynamic var count: Int = 0
+    @objc dynamic var userLikes: Int = 0
 
     enum CodingKeys: String, CodingKey {
         case userLikes = "user_likes"
@@ -36,7 +44,7 @@ struct Likes: Codable {
 }
 
 // MARK: - Size
-struct Size: Codable {
-    let url: String
-    let type: String
+class Size: Object, Codable {
+    @objc dynamic var url: String = ""
+    @objc dynamic var type: String = ""
 }

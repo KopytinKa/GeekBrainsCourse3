@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct Groups: Codable {
     let response: ResponseGroups
@@ -16,20 +17,24 @@ struct ResponseGroups: Codable {
     let items: [Group]
 }
 
-struct Group: Codable {
-    let id: Int
-    let name: String
-    let avatar: String
+class Group: Object, Codable {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var name: String = ""
+    @objc dynamic var avatar: String = ""
     
     enum CodingKeys: String, CodingKey {
         case id
         case name
         case avatar = "photo_50"
     }
-}
+    
+    override public func isEqual(_ object: Any?) -> Bool {
+        
+        if let other = object as? Group {
+            return self.id == other.id
+        }
 
-extension Group: Equatable {
-    static func == (lhs: Group, rhs: Group) -> Bool {
-        return lhs.name == rhs.name
+        return false
+
     }
 }
