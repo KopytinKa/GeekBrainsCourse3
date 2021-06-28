@@ -15,12 +15,17 @@ class FriendsListViewController: UIViewController {
     let friendTableViewCellIdentifier = "FriendTableViewCellIdentifier"
     let fromFriendsListToFriendsPhotosSegueIdentifier = "fromFriendsListToFriendsPhotos"
     
-    var searchFriends = [User]()
+    let apiVKService = VKService()
+    
+    var friends = [Friend]()
+    var searchFriends = [Friend]()
     
     var searchFlag = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setFriends()
 
         friendsListTableView.dataSource = self
         friendsListTableView.delegate = self
@@ -29,12 +34,19 @@ class FriendsListViewController: UIViewController {
         searchBar.delegate = self
     }
     
-    func getMyFriends() -> [User] {
+    func setFriends() {
+        apiVKService.getFriendsList(by: nil) { friends in
+            self.friends = friends
+            self.friendsListTableView.reloadData()
+        }
+    }
+    
+    func getMyFriends() -> [Friend] {
         if searchFlag {
             return searchFriends
         }
         
-        return DataStorage.shared.friendsArray
+        return friends
     }
     
     func arrayLetter() -> [String] {
@@ -52,8 +64,8 @@ class FriendsListViewController: UIViewController {
         return resultArray
     }
     
-    func arrayByLetter(letter: String) -> [User] {
-        var resultArray = [User]()
+    func arrayByLetter(letter: String) -> [Friend] {
+        var resultArray = [Friend]()
         
         for friend in getMyFriends() {
             let nameLetter = String(friend.getFullName().prefix(1))
@@ -72,9 +84,7 @@ class FriendsListViewController: UIViewController {
             guard let indexPath = sender as? IndexPath else { return }
             let friend = arrayByLetter(letter: arrayLetter()[indexPath.section])[indexPath.row]
             
-            if let friendPhotos = friend.photos {
-                friendsPhotosViewController.photos = friendPhotos
-            }
+            friendsPhotosViewController.friendId = friend.id
         }
     }
 }
@@ -122,7 +132,7 @@ extension FriendsListViewController: UISearchBarDelegate {
             searchFlag = false
         } else {
             searchFlag = true
-            searchFriends = DataStorage.shared.friendsArray.filter({
+            searchFriends = friends.filter({
                 $0.getFullName().lowercased().contains(searchText.lowercased())
             })
         }

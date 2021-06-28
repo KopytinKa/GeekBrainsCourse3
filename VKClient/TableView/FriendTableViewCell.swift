@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class FriendTableViewCell: UITableViewCell {
 
@@ -25,14 +26,9 @@ class FriendTableViewCell: UITableViewCell {
         nameLabel.text = nil
     }
     
-    func configure(user: User) {
+    func configure(user: Friend) {
         nameLabel.text = user.getFullName()
-        
-        if let avatar = user.avatar {
-            avatarImageView.image = avatar
-        } else {
-            avatarImageView.image = UIImage(named: "camera")
-        }
+        avatarImageView.sd_setImage(with: URL(string: user.avatar), placeholderImage: UIImage(named: "camera"))
     }
     
     override func prepareForReuse() {
