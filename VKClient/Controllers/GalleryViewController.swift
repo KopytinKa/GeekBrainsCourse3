@@ -25,12 +25,10 @@ class GalleryViewController: UIViewController {
         for photo in galleryPhotos {
             for photoSize in photo.sizes {
                 if photoSize.type == "x" {
-                    if let url = URL(string: photoSize.url) {
-                        if let data = try? Data(contentsOf: url) {
-                            if let image = UIImage(data: data) {
-                                images.append(image)
-                            }
-                        }
+                    if let url = URL(string: photoSize.url),
+                       let data = try? Data(contentsOf: url),
+                       let image = UIImage(data: data) {
+                        images.append(image)
                     }
                 }
             }
