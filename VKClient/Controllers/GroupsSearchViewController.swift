@@ -57,7 +57,8 @@ extension GroupsSearchViewController: UITableViewDataSource, UITableViewDelegate
 extension GroupsSearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty {
-            apiVKService.getGroupsListWith(query: searchText) { groups in
+            apiVKService.getGroupsListWith(query: searchText) { [weak self] groups in
+                guard let self = self else { return }
                 self.searchGroups = groups
                 self.groupsSearchTableView.reloadData()
             }

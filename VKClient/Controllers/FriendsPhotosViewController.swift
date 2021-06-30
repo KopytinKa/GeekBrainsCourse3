@@ -30,7 +30,8 @@ class FriendsPhotosViewController: UIViewController {
     }
     
     func setPhotosBy(userId: Int) {
-        apiVKService.getPhotos(by: userId) { photos in
+        apiVKService.getPhotos(by: userId) { [weak self] photos in
+            guard let self = self else { return }
             self.photos = photos
             self.friendPhotosCollectionView.reloadData()
         }

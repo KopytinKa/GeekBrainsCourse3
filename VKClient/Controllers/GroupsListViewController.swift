@@ -28,7 +28,8 @@ class GroupsListViewController: UIViewController {
     }
     
     func setGroups() {
-        apiVKService.getGroupsList(by: nil) { groups in
+        apiVKService.getGroupsList(by: nil) { [weak self] groups in
+            guard let self = self else { return }
             self.groups = groups
             self.groupsListTableView.reloadData()
         }

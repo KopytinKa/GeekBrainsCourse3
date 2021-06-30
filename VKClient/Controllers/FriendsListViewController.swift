@@ -35,7 +35,8 @@ class FriendsListViewController: UIViewController {
     }
     
     func setFriends() {
-        apiVKService.getFriendsList(by: nil) { friends in
+        apiVKService.getFriendsList(by: nil) { [weak self] friends in
+            guard let self = self else { return }
             self.friends = friends
             self.friendsListTableView.reloadData()
         }
