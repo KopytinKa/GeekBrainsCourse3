@@ -39,6 +39,12 @@
 		8B93963B26837C74006978FA /* Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B93963A26837C74006978FA /* Friends.swift */; };
 		8B93963D26848E34006978FA /* Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B93963C26848E34006978FA /* Groups.swift */; };
 		8B93963F2685DECA006978FA /* Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B93963E2685DECA006978FA /* Photos.swift */; };
+		8B939649268CA043006978FA /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B939648268CA043006978FA /* BaseModel.swift */; };
+		8B93964B268CA04F006978FA /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B93964A268CA04F006978FA /* UserModel.swift */; };
+		8B93964D268CA05E006978FA /* GroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B93964C268CA05E006978FA /* GroupModel.swift */; };
+		8B93964F268CA068006978FA /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B93964E268CA068006978FA /* PhotoModel.swift */; };
+		8B939651268CA529006978FA /* SizeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B939650268CA529006978FA /* SizeModel.swift */; };
+		8B939653268CA534006978FA /* LikesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B939652268CA534006978FA /* LikesModel.swift */; };
 		8B969B49264DACF400FD9FD1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B969B48264DACF400FD9FD1 /* AppDelegate.swift */; };
 		8B969B4B264DACF400FD9FD1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B969B4A264DACF400FD9FD1 /* SceneDelegate.swift */; };
 		8B969B50264DACF400FD9FD1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B969B4E264DACF400FD9FD1 /* Main.storyboard */; };
@@ -84,6 +90,12 @@
 		8B93963A26837C74006978FA /* Friends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friends.swift; sourceTree = "<group>"; };
 		8B93963C26848E34006978FA /* Groups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Groups.swift; sourceTree = "<group>"; };
 		8B93963E2685DECA006978FA /* Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photos.swift; sourceTree = "<group>"; };
+		8B939648268CA043006978FA /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
+		8B93964A268CA04F006978FA /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		8B93964C268CA05E006978FA /* GroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupModel.swift; sourceTree = "<group>"; };
+		8B93964E268CA068006978FA /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
+		8B939650268CA529006978FA /* SizeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeModel.swift; sourceTree = "<group>"; };
+		8B939652268CA534006978FA /* LikesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesModel.swift; sourceTree = "<group>"; };
 		8B969B45264DACF400FD9FD1 /* VKClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B969B48264DACF400FD9FD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8B969B4A264DACF400FD9FD1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -157,6 +169,12 @@
 				8B93963A26837C74006978FA /* Friends.swift */,
 				8B93963C26848E34006978FA /* Groups.swift */,
 				8B93963E2685DECA006978FA /* Photos.swift */,
+				8B939648268CA043006978FA /* BaseModel.swift */,
+				8B93964A268CA04F006978FA /* UserModel.swift */,
+				8B93964C268CA05E006978FA /* GroupModel.swift */,
+				8B93964E268CA068006978FA /* PhotoModel.swift */,
+				8B939650268CA529006978FA /* SizeModel.swift */,
+				8B939652268CA534006978FA /* LikesModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -381,6 +399,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B939653268CA534006978FA /* LikesModel.swift in Sources */,
 				8B6D97A5267392BA0043D650 /* GalleryHorisontalView.swift in Sources */,
 				8B29F3202655816F000FAABE /* GroupsSearchViewController.swift in Sources */,
 				8B29F3162655744B000FAABE /* FriendsListViewController.swift in Sources */,
@@ -392,6 +411,7 @@
 				8B6D97A0267372D40043D650 /* GalleryViewController.swift in Sources */,
 				8B6D97AE267A8F5D0043D650 /* CustomInteractiveTransition.swift in Sources */,
 				8B5E659B266561B100783D15 /* NewsTableViewCell.swift in Sources */,
+				8B93964D268CA05E006978FA /* GroupModel.swift in Sources */,
 				8B969B5D264DAF7600FD9FD1 /* LoginFormViewController.swift in Sources */,
 				8B6D97AC2678AA7A0043D650 /* NavigationPopAnimator.swift in Sources */,
 				8B5E65982665616E00783D15 /* NewsListViewController.swift in Sources */,
@@ -399,6 +419,7 @@
 				8B6D97B0267AADB00043D650 /* GalleryPushAnimator.swift in Sources */,
 				8B6D97B9267BAC970043D650 /* Session.swift in Sources */,
 				8B29F31D26557569000FAABE /* GroupTableViewCell.swift in Sources */,
+				8B939651268CA529006978FA /* SizeModel.swift in Sources */,
 				8B93963F2685DECA006978FA /* Photos.swift in Sources */,
 				8B29F31826557474000FAABE /* GroupsListViewController.swift in Sources */,
 				8B969B4B264DACF400FD9FD1 /* SceneDelegate.swift in Sources */,
@@ -407,7 +428,10 @@
 				8B93963D26848E34006978FA /* Groups.swift in Sources */,
 				8B6D97BE267CDF5E0043D650 /* VKService.swift in Sources */,
 				8B29F32326558A27000FAABE /* FriendTableViewCell.swift in Sources */,
+				8B93964B268CA04F006978FA /* UserModel.swift in Sources */,
 				8B29F3272655B34F000FAABE /* FriendPhotosCollectionViewCell.swift in Sources */,
+				8B939649268CA043006978FA /* BaseModel.swift in Sources */,
+				8B93964F268CA068006978FA /* PhotoModel.swift in Sources */,
 				8B93963B26837C74006978FA /* Friends.swift in Sources */,
 				8B6D97A72678A84B0043D650 /* NavigationController.swift in Sources */,
 				8B29F335265D9869000FAABE /* BackImageView.swift in Sources */,

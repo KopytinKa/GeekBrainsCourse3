@@ -11,5 +11,6 @@ target 'VKClient' do
   pod 'SDWebImage'
   pod 'RealmSwift'
   pod 'SwiftKeychainWrapper'
+  pod 'DynamicJSON'
 
 end
