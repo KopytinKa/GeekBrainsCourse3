@@ -48,8 +48,6 @@ class NewsTableViewCell: UITableViewCell {
     func configure(news: News) {
         if let image = news.photo {
             photoImageView.image = image
-        } else {
-            photoImageView.bounds.size.width = 0
         }
         
         if let description = news.description {
