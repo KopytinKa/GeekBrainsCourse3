@@ -11,7 +11,7 @@ class GalleryViewController: UIViewController {
 
     @IBOutlet weak var galleryView: GalleryHorisontalView!
     
-    var galleryPhotos = [Photo]()
+    var galleryPhotos = [PhotoModel]()
     var selectedImageIndex = 0
     
     override func viewDidLoad() {
@@ -23,14 +23,10 @@ class GalleryViewController: UIViewController {
         var images = [UIImage]()
         
         for photo in galleryPhotos {
-            for photoSize in photo.sizes {
-                if photoSize.type == "x" {
-                    if let url = URL(string: photoSize.url),
-                       let data = try? Data(contentsOf: url),
-                       let image = UIImage(data: data) {
-                        images.append(image)
-                    }
-                }
+            if let url = URL(string: photo.urlByGallery),
+               let data = try? Data(contentsOf: url),
+               let image = UIImage(data: data) {
+                images.append(image)
             }
         }
         

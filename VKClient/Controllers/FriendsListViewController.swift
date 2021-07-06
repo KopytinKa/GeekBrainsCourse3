@@ -16,9 +16,10 @@ class FriendsListViewController: UIViewController {
     let fromFriendsListToFriendsPhotosSegueIdentifier = "fromFriendsListToFriendsPhotos"
     
     let apiVKService = VKService()
+    let realmService = RealmService()
     
-    var friends = [Friend]()
-    var searchFriends = [Friend]()
+    var friends = [UserModel]()
+    var searchFriends = [UserModel]()
     
     var searchFlag = false
     
@@ -35,14 +36,17 @@ class FriendsListViewController: UIViewController {
     }
     
     func setFriends() {
-        apiVKService.getFriendsList(by: nil) { [weak self] friends in
+        apiVKService.getFriendsList(by: nil) { [weak self] in
             guard let self = self else { return }
-            self.friends = friends
-            self.friendsListTableView.reloadData()
+            
+            if let friends = self.realmService.read(object: UserModel.self) as? [UserModel] {
+                self.friends = friends
+                self.friendsListTableView.reloadData()
+            }
         }
     }
     
-    func getMyFriends() -> [Friend] {
+    func getMyFriends() -> [UserModel] {
         if searchFlag {
             return searchFriends
         }
@@ -65,8 +69,8 @@ class FriendsListViewController: UIViewController {
         return resultArray
     }
     
-    func arrayByLetter(letter: String) -> [Friend] {
-        var resultArray = [Friend]()
+    func arrayByLetter(letter: String) -> [UserModel] {
+        var resultArray = [UserModel]()
         
         for friend in getMyFriends() {
             let nameLetter = String(friend.getFullName().prefix(1))

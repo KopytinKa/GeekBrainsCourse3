@@ -17,7 +17,7 @@ class GroupsSearchViewController: UIViewController {
     
     let apiVKService = VKService()
     
-    var searchGroups = [Group]()
+    var searchGroups = [GroupModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

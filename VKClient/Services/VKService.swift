@@ -7,15 +7,17 @@
 
 import Foundation
 import Alamofire
+import DynamicJSON
 
 class VKService {
     
     let baseUrl = "https://api.vk.com/method/"
     let version = "5.131"
+    let realmService = RealmService()
     
     //MARK: - Возвращает список идентификаторов друзей пользователя или расширенную информацию о друзьях пользователя (при использовании параметра fields) https://vk.com/dev/friends.get
     
-    func getFriendsList(by userId: Int?, completion: @escaping ([Friend]) -> ()) {
+    func getFriendsList(by userId: Int?, completion: @escaping () -> ()) {
         let method = "friends.get"
         
         var parameters: Parameters = [
@@ -36,19 +38,22 @@ class VKService {
         
         let url = baseUrl + method
         
-        AF.request(url, method: .get, parameters: parameters).responseData { response in
+        AF.request(url, method: .get, parameters: parameters).responseData { [weak self] response in
+            guard let self = self else { return }
             guard let data = response.value else { return }
-            let friendsResponse = try? JSONDecoder().decode(Friends.self, from: data).response
-            guard let friends = friendsResponse?.items else { return }
-            DispatchQueue.main.async {
-                completion(friends)
-            }
+            guard let items = JSON(data).response.items.array else { return }
+
+            let friends = items.map { UserModel(data: $0) }
+            
+            self.realmService.add(models: friends)
+            
+            completion()
         }
     }
     
     //MARK: - Возвращает список фотографий в альбоме https://vk.com/dev/photos.get
     
-    func getPhotos(by ownerId: Int, completion: @escaping ([Photo]) -> ()) {
+    func getPhotos(by ownerId: Int, completion: @escaping () -> ()) {
         let method = "photos.get"
         
         let parameters: Parameters = [
@@ -68,19 +73,22 @@ class VKService {
         
         let url = baseUrl + method
         
-        AF.request(url, method: .get, parameters: parameters).responseData { response in
+        AF.request(url, method: .get, parameters: parameters).responseData { [weak self] response in
+            guard let self = self else { return }
             guard let data = response.value else { return }
-            let photosResponse = try? JSONDecoder().decode(Photos.self, from: data).response
-            guard let photos = photosResponse?.items else { return }
-            DispatchQueue.main.async {
-                completion(photos)
-            }
+            guard let items = JSON(data).response.items.array else { return }
+
+            let photos = items.map { PhotoModel(data: $0) }
+            
+            self.realmService.add(models: photos)
+            
+            completion()
         }
     }
     
     //MARK: - Возвращает список сообществ указанного пользователя https://vk.com/dev/groups.get
     
-    func getGroupsList(by userId: Int?, completion: @escaping ([Group]) -> ()) {
+    func getGroupsList(by userId: Int?, completion: @escaping () -> ()) {
         let method = "groups.get"
         
         var parameters: Parameters = [
@@ -99,19 +107,22 @@ class VKService {
         
         let url = baseUrl + method
         
-        AF.request(url, method: .get, parameters: parameters).responseData { response in
+        AF.request(url, method: .get, parameters: parameters).responseData { [weak self] response in
+            guard let self = self else { return }
             guard let data = response.value else { return }
-            let groupsResponse = try? JSONDecoder().decode(Groups.self, from: data).response
-            guard let groups = groupsResponse?.items else { return }
-            DispatchQueue.main.async {
-                completion(groups)
-            }
+            guard let items = JSON(data).response.items.array else { return }
+
+            let groups = items.map { GroupModel(data: $0) }
+            
+            self.realmService.add(models: groups)
+            
+            completion()
         }
     }
     
     //MARK: - Осуществляет поиск сообществ по заданной подстроке https://vk.com/dev/groups.search
     
-    func getGroupsListWith(query: String, completion: @escaping ([Group]) -> ()) {
+    func getGroupsListWith(query: String, completion: @escaping ([GroupModel]) -> ()) {
         let method = "groups.search"
         
         let parameters: Parameters = [
@@ -132,8 +143,10 @@ class VKService {
         
         AF.request(url, method: .get, parameters: parameters).responseData { response in
             guard let data = response.value else { return }
-            let groupsResponse = try? JSONDecoder().decode(Groups.self, from: data).response
-            guard let groups = groupsResponse?.items else { return }
+            guard let items = JSON(data).response.items.array else { return }
+
+            let groups = items.map { GroupModel(data: $0) }
+            
             DispatchQueue.main.async {
                 completion(groups)
             }

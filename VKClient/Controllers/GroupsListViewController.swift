@@ -15,8 +15,9 @@ class GroupsListViewController: UIViewController {
     let addGroupSegueIdentifier = "addGroup"
     
     let apiVKService = VKService()
+    let realmService = RealmService()
     
-    var groups = [Group]()
+    var groups = [GroupModel]()
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,10 +29,13 @@ class GroupsListViewController: UIViewController {
     }
     
     func setGroups() {
-        apiVKService.getGroupsList(by: nil) { [weak self] groups in
+        apiVKService.getGroupsList(by: nil) { [weak self] in
             guard let self = self else { return }
-            self.groups = groups
-            self.groupsListTableView.reloadData()
+
+            if let groups = self.realmService.read(object: GroupModel.self) as? [GroupModel] {
+                self.groups = groups
+                self.groupsListTableView.reloadData()
+            }
         }
     }
     
