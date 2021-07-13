@@ -53,7 +53,7 @@ class VKService {
     
     //MARK: - Возвращает список фотографий в альбоме https://vk.com/dev/photos.get
     
-    func getPhotos(by ownerId: Int, completion: @escaping () -> ()) {
+    func getPhotos(by ownerId: Int) {
         let method = "photos.get"
         
         let parameters: Parameters = [
@@ -80,15 +80,13 @@ class VKService {
 
             let photos = items.map { PhotoModel(data: $0) }
             
-            self.realmService.add(models: photos)
-            
-            completion()
+            self.realmService.add(models: photos)            
         }
     }
     
     //MARK: - Возвращает список сообществ указанного пользователя https://vk.com/dev/groups.get
     
-    func getGroupsList(by userId: Int?, completion: @escaping () -> ()) {
+    func getGroupsList(by userId: Int?) {
         let method = "groups.get"
         
         var parameters: Parameters = [
@@ -114,9 +112,7 @@ class VKService {
 
             let groups = items.map { GroupModel(data: $0) }
             
-            self.realmService.add(models: groups)
-            
-            completion()
+            self.realmService.add(models: groups)            
         }
     }
     
