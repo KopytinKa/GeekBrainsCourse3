@@ -12,5 +12,7 @@ target 'VKClient' do
   pod 'RealmSwift'
   pod 'SwiftKeychainWrapper'
   pod 'DynamicJSON'
+  # pod 'Firebase/Auth'
+  pod 'Firebase/Database'
 
 end
