@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 import DynamicJSON
+import FirebaseDatabase
 
 class VKService {
     
@@ -145,6 +146,41 @@ class VKService {
             
             DispatchQueue.main.async {
                 completion(groups)
+            }
+        }
+    }
+    
+    //MARK: - Возвращает данные, необходимые для показа списка новостей для текущего пользователя https://vk.com/dev/newsfeed.get
+    
+    func getNewsfeed() {
+        let method = "newsfeed.get"
+        let ref = Database.database().reference(withPath: "news")
+        
+        let parameters: Parameters = [
+            "filters": "post",
+            //"return_banned": ,
+            //"start_time": ,
+            //"end_time": ,
+            //"max_photos": ,
+            //"source_ids": ,
+            //"start_from": ,
+            "count": "10",
+            //"fields": ,
+            //"section": ,
+            "access_token": Session.shared.token,
+            "v": version
+        ]
+        
+        let url = baseUrl + method
+        
+        AF.request(url, method: .get, parameters: parameters).responseData { response in
+            guard let data = response.value else { return }
+            guard let items = JSON(data).response.items.array else { return }
+            
+            for new in items {
+                let new = FirebaseNew(data: new)
+                let newRef = ref.child(Session.shared.userId).child(String(new.postId))
+                newRef.setValue(new.toAnyObject())
             }
         }
     }
