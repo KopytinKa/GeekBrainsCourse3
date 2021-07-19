@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import RealmSwift
 
 class GalleryViewController: UIViewController {
 
     @IBOutlet weak var galleryView: GalleryHorisontalView!
     
-    var galleryPhotos = [PhotoModel]()
+    var galleryPhotos: Results<PhotoModel>?
     var selectedImageIndex = 0
     
     override func viewDidLoad() {
@@ -21,6 +22,7 @@ class GalleryViewController: UIViewController {
     
     func getImages() -> [UIImage] {
         var images = [UIImage]()
+        guard let galleryPhotos = galleryPhotos else { return images }
         
         for photo in galleryPhotos {
             if let url = URL(string: photo.urlByGallery),

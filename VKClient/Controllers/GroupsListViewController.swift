@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class GroupsListViewController: UIViewController {
 
@@ -17,7 +18,28 @@ class GroupsListViewController: UIViewController {
     let apiVKService = VKService()
     let realmService = RealmService()
     
-    var groups = [GroupModel]()
+    var token: NotificationToken?
+    
+    var groups: Results<GroupModel>? {
+        didSet {
+            token = groups?.observe { [weak self] changes in
+                guard let self = self else { return }
+                
+                switch changes {
+                case .initial:
+                    self.groupsListTableView.reloadData()
+                case .update(_, let deletions, let insertions, let modifications):
+                    self.groupsListTableView.beginUpdates()
+                    self.groupsListTableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }), with: .automatic)
+                    self.groupsListTableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0) }), with: .automatic)
+                    self.groupsListTableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }), with: .automatic)
+                    self.groupsListTableView.endUpdates()
+                case .error(let error):
+                    fatalError("\(error)")
+                }
+            }
+        }
+    }
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,14 +51,10 @@ class GroupsListViewController: UIViewController {
     }
     
     func setGroups() {
-        apiVKService.getGroupsList(by: nil) { [weak self] in
-            guard let self = self else { return }
+        apiVKService.getGroupsList(by: nil)
 
-            if let groups = self.realmService.read(object: GroupModel.self) as? [GroupModel] {
-                self.groups = groups
-                self.groupsListTableView.reloadData()
-            }
-        }
+        guard let realm = try? Realm() else { return }
+        groups = realm.objects(GroupModel.self)
     }
     
     @IBAction func addGroup(segue: UIStoryboardSegue) {
@@ -46,10 +64,7 @@ class GroupsListViewController: UIViewController {
             if let indexPath = groupSearchViewController.groupsSearchTableView.indexPathForSelectedRow {
                 let group = groupSearchViewController.searchGroups[indexPath.row]
                 
-                if !groups.contains(group) {
-                    groups.append(group)
-                    groupsListTableView.reloadData()
-                }
+                realmService.add(models: [group])
             }
         }
     }
@@ -57,7 +72,7 @@ class GroupsListViewController: UIViewController {
 
 extension GroupsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups.count
+        return groups?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -67,18 +82,17 @@ extension GroupsListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let group = groups[indexPath.row]
-        
-        cell.configure(group: group)
+        if let group = groups?[indexPath.row] {
+            cell.configure(group: group)
+        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 
-        if editingStyle == .delete {
-            groups.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+        if let group = groups?[indexPath.row], editingStyle == .delete {
+            realmService.delete(model: group)
         }
     }
 }
