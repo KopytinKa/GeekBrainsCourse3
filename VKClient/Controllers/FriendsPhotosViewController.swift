@@ -11,10 +11,11 @@ class FriendsPhotosViewController: UIViewController {
 
     @IBOutlet weak var friendPhotosCollectionView: UICollectionView!
     
-    var photos = [Photo]()
+    var photos = [PhotoModel]()
     var friendId:Int = 0
     
     let apiVKService = VKService()
+    let realmService = RealmService()
     
     let friendPhotosCollectionViewCellIdentifier = "FriendPhotosCollectionViewCellIdentifier"
     let fromFriendsPhotosToGallerySegueIdentifier = "fromPhotosToGallery"
@@ -30,10 +31,13 @@ class FriendsPhotosViewController: UIViewController {
     }
     
     func setPhotosBy(userId: Int) {
-        apiVKService.getPhotos(by: userId) { [weak self] photos in
+        apiVKService.getPhotos(by: userId) { [weak self] in
             guard let self = self else { return }
-            self.photos = photos
-            self.friendPhotosCollectionView.reloadData()
+
+            if let photos = self.realmService.read(object: PhotoModel.self, filter: "ownerID == \(userId)") as? [PhotoModel] {
+                self.photos = photos
+                self.friendPhotosCollectionView.reloadData()
+            }
         }
     }
     
