@@ -219,7 +219,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="p4z-zk-ASO">
             <objects>
-                <tabBarController id="U3z-0s-M2O" customClass="TabBarController" customModule="VKClient" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController id="U3z-0s-M2O" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="kzB-Y5-iHX"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="doj-wI-Q7A">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>

@@ -37,22 +37,33 @@ class NewsTableViewCell: UITableViewCell {
     func clearCell() {
         descriptionLabel.text = nil
         photoImageView.image = nil
-        countLikesLabel.text = "0"
-        countViewsLabel.text = "4,5K"
-        countRepostsLabel.text = "999"
-        countCommentsLabel.text = "999"
+        countLikesLabel.text = nil
+        countViewsLabel.text = nil
+        countRepostsLabel.text = nil
+        countCommentsLabel.text = nil
         likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         likeFlag = false
     }
     
-    func configure(news: News) {
-        if let image = news.photo {
-            photoImageView.image = image
+    func configure(news: FirebaseNew) {
+        if let image = news.urlImage {
+            photoImageView.sd_setImage(with: URL(string: image))
         }
         
-        if let description = news.description {
+        if let description = news.text {
             descriptionLabel.text = description
         }
+        
+        countLikesLabel.text = String(news.likesCount)
+        countViewsLabel.text = String(news.viewsCount)
+        countRepostsLabel.text = String(news.repostsCount)
+        countCommentsLabel.text = String(news.commentsCount)
+        
+        if news.userLikes > 0 {
+            likeFlag = true
+            likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        }
+        
     }
     
     override func prepareForReuse() {
@@ -64,5 +75,4 @@ class NewsTableViewCell: UITableViewCell {
         setup()
         clearCell()
     }
-    
 }

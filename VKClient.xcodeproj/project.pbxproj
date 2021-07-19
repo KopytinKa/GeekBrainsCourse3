@@ -21,12 +21,10 @@
 		8B5E65982665616E00783D15 /* NewsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5E65972665616E00783D15 /* NewsListViewController.swift */; };
 		8B5E659B266561B100783D15 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5E6599266561B100783D15 /* NewsTableViewCell.swift */; };
 		8B5E659C266561B100783D15 /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B5E659A266561B100783D15 /* NewsTableViewCell.xib */; };
-		8B5E659E2665758400783D15 /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5E659D2665758400783D15 /* News.swift */; };
-		8B5E65A02666628E00783D15 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5E659F2666628E00783D15 /* DataStorage.swift */; };
-		8B5E65A22666635600783D15 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5E65A12666635600783D15 /* TabBarController.swift */; };
 		8B65D8AD269D89DF00AE1D38 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B65D8AC269D89DF00AE1D38 /* GoogleService-Info.plist */; };
 		8B65D8AF269DBDE300AE1D38 /* FirebaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8AE269DBDE300AE1D38 /* FirebaseUser.swift */; };
 		8B65D8B1269DC82400AE1D38 /* FirebaseGroupAdded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8B0269DC82400AE1D38 /* FirebaseGroupAdded.swift */; };
+		8B65D8B326A040B900AE1D38 /* FirebaseNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8B226A040B900AE1D38 /* FirebaseNew.swift */; };
 		8B6D97A0267372D40043D650 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6D979F267372D40043D650 /* GalleryViewController.swift */; };
 		8B6D97A3267392AF0043D650 /* GalleryHorisontalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6D97A2267392AF0043D650 /* GalleryHorisontalView.xib */; };
 		8B6D97A5267392BA0043D650 /* GalleryHorisontalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6D97A4267392BA0043D650 /* GalleryHorisontalView.swift */; };
@@ -70,12 +68,10 @@
 		8B5E65972665616E00783D15 /* NewsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListViewController.swift; sourceTree = "<group>"; };
 		8B5E6599266561B100783D15 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		8B5E659A266561B100783D15 /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
-		8B5E659D2665758400783D15 /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
-		8B5E659F2666628E00783D15 /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
-		8B5E65A12666635600783D15 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		8B65D8AC269D89DF00AE1D38 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B65D8AE269DBDE300AE1D38 /* FirebaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUser.swift; sourceTree = "<group>"; };
 		8B65D8B0269DC82400AE1D38 /* FirebaseGroupAdded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseGroupAdded.swift; sourceTree = "<group>"; };
+		8B65D8B226A040B900AE1D38 /* FirebaseNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseNew.swift; sourceTree = "<group>"; };
 		8B6D979F267372D40043D650 /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		8B6D97A2267392AF0043D650 /* GalleryHorisontalView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GalleryHorisontalView.xib; sourceTree = "<group>"; };
 		8B6D97A4267392BA0043D650 /* GalleryHorisontalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryHorisontalView.swift; sourceTree = "<group>"; };
@@ -159,14 +155,13 @@
 		8B29F32B2655BBBD000FAABE /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8B5E659D2665758400783D15 /* News.swift */,
-				8B5E659F2666628E00783D15 /* DataStorage.swift */,
 				8B6D97B8267BAC970043D650 /* Session.swift */,
 				8B93964A268CA04F006978FA /* UserModel.swift */,
 				8B93964C268CA05E006978FA /* GroupModel.swift */,
 				8B93964E268CA068006978FA /* PhotoModel.swift */,
 				8B65D8AE269DBDE300AE1D38 /* FirebaseUser.swift */,
 				8B65D8B0269DC82400AE1D38 /* FirebaseGroupAdded.swift */,
+				8B65D8B226A040B900AE1D38 /* FirebaseNew.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -267,7 +262,6 @@
 				8B29F3192655750C000FAABE /* TableView */,
 				8B6D97A62678A84B0043D650 /* NavigationController.swift */,
 				8B6D97AD267A8F5D0043D650 /* CustomInteractiveTransition.swift */,
-				8B5E65A12666635600783D15 /* TabBarController.swift */,
 				8B65D8AC269D89DF00AE1D38 /* GoogleService-Info.plist */,
 			);
 			path = VKClient;
@@ -397,16 +391,14 @@
 				8B6D97A5267392BA0043D650 /* GalleryHorisontalView.swift in Sources */,
 				8B29F3202655816F000FAABE /* GroupsSearchViewController.swift in Sources */,
 				8B29F3162655744B000FAABE /* FriendsListViewController.swift in Sources */,
-				8B5E659E2665758400783D15 /* News.swift in Sources */,
 				8B6D97AA2678AA6A0043D650 /* NavigationPushAnimator.swift in Sources */,
-				8B5E65A22666635600783D15 /* TabBarController.swift in Sources */,
-				8B5E65A02666628E00783D15 /* DataStorage.swift in Sources */,
 				8B6D97B2267AAF890043D650 /* GalleryPopAnimator.swift in Sources */,
 				8B6D97A0267372D40043D650 /* GalleryViewController.swift in Sources */,
 				8B6D97AE267A8F5D0043D650 /* CustomInteractiveTransition.swift in Sources */,
 				8B5E659B266561B100783D15 /* NewsTableViewCell.swift in Sources */,
 				8B93964D268CA05E006978FA /* GroupModel.swift in Sources */,
 				8B969B5D264DAF7600FD9FD1 /* LoginFormViewController.swift in Sources */,
+				8B65D8B326A040B900AE1D38 /* FirebaseNew.swift in Sources */,
 				8B65D8AF269DBDE300AE1D38 /* FirebaseUser.swift in Sources */,
 				8B6D97AC2678AA7A0043D650 /* NavigationPopAnimator.swift in Sources */,
 				8B5E65982665616E00783D15 /* NewsListViewController.swift in Sources */,
