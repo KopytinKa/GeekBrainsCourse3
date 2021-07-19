@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import FirebaseDatabase
 
 class GroupsListViewController: UIViewController {
 
@@ -19,6 +20,8 @@ class GroupsListViewController: UIViewController {
     let realmService = RealmService()
     
     var token: NotificationToken?
+    
+    private let ref = Database.database().reference(withPath: "usersGroups")
     
     var groups: Results<GroupModel>? {
         didSet {
@@ -65,6 +68,10 @@ class GroupsListViewController: UIViewController {
                 let group = groupSearchViewController.searchGroups[indexPath.row]
                 
                 realmService.add(models: [group])
+                
+                let groupAdded = FirebaseGroupAdded(id: group.id, name: group.name, avatar: group.avatar)
+                let groupRef = self.ref.child(Session.shared.userId).child(group.name)
+                groupRef.setValue(groupAdded.toAnyObject())
             }
         }
     }

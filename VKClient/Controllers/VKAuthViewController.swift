@@ -7,6 +7,7 @@
 import UIKit
 import WebKit
 import SwiftKeychainWrapper
+import FirebaseDatabase
 
 class VKAuthViewController: UIViewController {
 
@@ -17,6 +18,8 @@ class VKAuthViewController: UIViewController {
     }
     
     let fromAuthVKToLoginViewSegueIdentifier = "fromAuthVKToLoginView"
+    
+    private let ref = Database.database().reference(withPath: "users")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +75,10 @@ extension VKAuthViewController: WKNavigationDelegate {
         
         UserDefaults.standard.set(userId, forKey: "userId")
         Session.shared.userId = userId
+        
+        let user = FirebaseUser(id: userId)
+        let userRef = self.ref.child(userId)
+        userRef.setValue(user.toAnyObject())
         
         showLoginView()
         
