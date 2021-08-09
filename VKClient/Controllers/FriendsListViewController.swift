@@ -36,13 +36,11 @@ class FriendsListViewController: UIViewController {
     }
     
     func setFriends() {
-        apiVKService.getFriendsList(by: nil) { [weak self] in
-            guard let self = self else { return }
-            
-            if let friends = self.realmService.read(object: UserModel.self) as? [UserModel] {
-                self.friends = friends
-                self.friendsListTableView.reloadData()
-            }
+        apiVKService.getFriendsList(by: nil)
+        
+        if let friends = self.realmService.read(object: UserModel.self) as? [UserModel] {
+            self.friends = friends
+            self.friendsListTableView.reloadData()
         }
     }
     
