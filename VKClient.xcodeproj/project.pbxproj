@@ -25,6 +25,7 @@
 		8B65D8AF269DBDE300AE1D38 /* FirebaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8AE269DBDE300AE1D38 /* FirebaseUser.swift */; };
 		8B65D8B1269DC82400AE1D38 /* FirebaseGroupAdded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8B0269DC82400AE1D38 /* FirebaseGroupAdded.swift */; };
 		8B65D8B326A040B900AE1D38 /* FirebaseNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8B226A040B900AE1D38 /* FirebaseNew.swift */; };
+		8B65D8BE26C292D200AE1D38 /* VKServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8BD26C292D200AE1D38 /* VKServiceError.swift */; };
 		8B6D97A0267372D40043D650 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6D979F267372D40043D650 /* GalleryViewController.swift */; };
 		8B6D97A3267392AF0043D650 /* GalleryHorisontalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6D97A2267392AF0043D650 /* GalleryHorisontalView.xib */; };
 		8B6D97A5267392BA0043D650 /* GalleryHorisontalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6D97A4267392BA0043D650 /* GalleryHorisontalView.swift */; };
@@ -72,6 +73,7 @@
 		8B65D8AE269DBDE300AE1D38 /* FirebaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUser.swift; sourceTree = "<group>"; };
 		8B65D8B0269DC82400AE1D38 /* FirebaseGroupAdded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseGroupAdded.swift; sourceTree = "<group>"; };
 		8B65D8B226A040B900AE1D38 /* FirebaseNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseNew.swift; sourceTree = "<group>"; };
+		8B65D8BD26C292D200AE1D38 /* VKServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKServiceError.swift; sourceTree = "<group>"; };
 		8B6D979F267372D40043D650 /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		8B6D97A2267392AF0043D650 /* GalleryHorisontalView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GalleryHorisontalView.xib; sourceTree = "<group>"; };
 		8B6D97A4267392BA0043D650 /* GalleryHorisontalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryHorisontalView.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 			children = (
 				8B6D97BD267CDF5E0043D650 /* VKService.swift */,
 				8B93965426935344006978FA /* RealmService.swift */,
+				8B65D8BD26C292D200AE1D38 /* VKServiceError.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 				8B93964D268CA05E006978FA /* GroupModel.swift in Sources */,
 				8B969B5D264DAF7600FD9FD1 /* LoginFormViewController.swift in Sources */,
 				8B65D8B326A040B900AE1D38 /* FirebaseNew.swift in Sources */,
+				8B65D8BE26C292D200AE1D38 /* VKServiceError.swift in Sources */,
 				8B65D8AF269DBDE300AE1D38 /* FirebaseUser.swift in Sources */,
 				8B6D97AC2678AA7A0043D650 /* NavigationPopAnimator.swift in Sources */,
 				8B5E65982665616E00783D15 /* NewsListViewController.swift in Sources */,

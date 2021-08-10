@@ -8,6 +8,7 @@
 import UIKit
 import RealmSwift
 import FirebaseDatabase
+import PromiseKit
 
 class GroupsListViewController: UIViewController {
 
@@ -54,10 +55,29 @@ class GroupsListViewController: UIViewController {
     }
     
     func setGroups() {
-        apiVKService.getGroupsList(by: nil)
-
-        guard let realm = try? Realm() else { return }
-        groups = realm.objects(GroupModel.self)
+        firstly {
+            apiVKService.getGroupsList(by: nil)
+        }.get { [weak self] groups in
+            guard let self = self else { return }
+            self.realmService.add(models: groups)
+        }.catch { [weak self] error in
+            guard let self = self else { return }
+            self.showError(error.localizedDescription)
+        }.finally { [weak self] in
+            guard let self = self else { return }
+            guard let realm = try? Realm() else { return }
+            self.groups = realm.objects(GroupModel.self)
+        }
+    }
+    
+    func showError(_ error: String) {
+        let alert = UIAlertController(title: "Внимание", message: error, preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "ОК", style: .cancel, handler: nil)
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func addGroup(segue: UIStoryboardSegue) {
