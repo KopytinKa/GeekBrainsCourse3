@@ -25,6 +25,7 @@
 		8B65D8AF269DBDE300AE1D38 /* FirebaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8AE269DBDE300AE1D38 /* FirebaseUser.swift */; };
 		8B65D8B1269DC82400AE1D38 /* FirebaseGroupAdded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8B0269DC82400AE1D38 /* FirebaseGroupAdded.swift */; };
 		8B65D8B326A040B900AE1D38 /* FirebaseNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8B226A040B900AE1D38 /* FirebaseNew.swift */; };
+		8B65D8BE26C292D200AE1D38 /* VKServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8BD26C292D200AE1D38 /* VKServiceError.swift */; };
 		8B65D8B626C1752D00AE1D38 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8B526C1752D00AE1D38 /* AsyncOperation.swift */; };
 		8B65D8B826C177F400AE1D38 /* GetDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8B726C177F400AE1D38 /* GetDataOperation.swift */; };
 		8B65D8BA26C17A1600AE1D38 /* ParseFriendsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8B926C17A1600AE1D38 /* ParseFriendsData.swift */; };
@@ -76,6 +77,7 @@
 		8B65D8AE269DBDE300AE1D38 /* FirebaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUser.swift; sourceTree = "<group>"; };
 		8B65D8B0269DC82400AE1D38 /* FirebaseGroupAdded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseGroupAdded.swift; sourceTree = "<group>"; };
 		8B65D8B226A040B900AE1D38 /* FirebaseNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseNew.swift; sourceTree = "<group>"; };
+		8B65D8BD26C292D200AE1D38 /* VKServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKServiceError.swift; sourceTree = "<group>"; };
 		8B65D8B526C1752D00AE1D38 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		8B65D8B726C177F400AE1D38 /* GetDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDataOperation.swift; sourceTree = "<group>"; };
 		8B65D8B926C17A1600AE1D38 /* ParseFriendsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseFriendsData.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 			children = (
 				8B6D97BD267CDF5E0043D650 /* VKService.swift */,
 				8B93965426935344006978FA /* RealmService.swift */,
+				8B65D8BD26C292D200AE1D38 /* VKServiceError.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				8B969B5D264DAF7600FD9FD1 /* LoginFormViewController.swift in Sources */,
 				8B65D8BC26C17C8C00AE1D38 /* SaveDataToRealm.swift in Sources */,
 				8B65D8B326A040B900AE1D38 /* FirebaseNew.swift in Sources */,
+				8B65D8BE26C292D200AE1D38 /* VKServiceError.swift in Sources */,
 				8B65D8AF269DBDE300AE1D38 /* FirebaseUser.swift in Sources */,
 				8B6D97AC2678AA7A0043D650 /* NavigationPopAnimator.swift in Sources */,
 				8B5E65982665616E00783D15 /* NewsListViewController.swift in Sources */,
