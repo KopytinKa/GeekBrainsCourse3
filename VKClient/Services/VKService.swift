@@ -16,10 +16,11 @@ class VKService {
     let baseUrl = "https://api.vk.com/method/"
     let version = "5.131"
     let realmService = RealmService()
+    let myQueue = OperationQueue()
     
     //MARK: - Возвращает список идентификаторов друзей пользователя или расширенную информацию о друзьях пользователя (при использовании параметра fields) https://vk.com/dev/friends.get
     
-    func getFriendsList(by userId: Int?, completion: @escaping () -> ()) {
+    func getFriendsList(by userId: Int?) {
         let method = "friends.get"
         
         var parameters: Parameters = [
@@ -48,9 +49,18 @@ class VKService {
             let friends = items.map { UserModel(data: $0) }
             
             self.realmService.add(models: friends)
-            
-            completion()
         }
+        let request = AF.request(url, method: .get, parameters: parameters)
+        let getDataOperation = GetDataOperation(request: request)
+        myQueue.addOperation(getDataOperation)
+        
+        let parseData = ParseFriendsData()
+        parseData.addDependency(getDataOperation)
+        myQueue.addOperation(parseData)
+        
+        let saveData = SaveDataToRealm()
+        saveData.addDependency(parseData)
+        OperationQueue.main.addOperation(saveData)
     }
     
     //MARK: - Возвращает список фотографий в альбоме https://vk.com/dev/photos.get
