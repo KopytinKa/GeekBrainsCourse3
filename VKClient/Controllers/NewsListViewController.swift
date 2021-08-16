@@ -12,7 +12,9 @@ class NewsListViewController: UIViewController {
 
     @IBOutlet weak var newsTableView: UITableView!
     
-    let newsTableViewCellIdentifier = "NewsTableViewCellIdentifier"
+    let newsTableViewCellTextIdentifier = "NewsTableViewCellTextIdentifier"
+    let newsTableViewCellImageIdentifier = "NewsTableViewCellImageIdentifier"
+    let newsTableViewCellCountersIdentifier = "NewsTableViewCellCountersIdentifier"
     
     let apiVKService = VKService()
     
@@ -25,7 +27,9 @@ class NewsListViewController: UIViewController {
         setNews()
 
         newsTableView.dataSource = self
-        newsTableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: newsTableViewCellIdentifier)
+        newsTableView.register(UINib(nibName: "NewsTableViewTextCell", bundle: nil), forCellReuseIdentifier: newsTableViewCellTextIdentifier)
+        newsTableView.register(UINib(nibName: "NewsTableViewImageCell", bundle: nil), forCellReuseIdentifier: newsTableViewCellImageIdentifier)
+        newsTableView.register(UINib(nibName: "NewsTableViewCountersCell", bundle: nil), forCellReuseIdentifier: newsTableViewCellCountersIdentifier)
         
     }
     
@@ -50,20 +54,52 @@ class NewsListViewController: UIViewController {
 }
 
 extension NewsListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return news.count
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var rows = 1
+        if news[section].text != nil { rows += 1}
+        if news[section].urlImage != nil { rows += 1}
+        return rows
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: newsTableViewCellIdentifier, for: indexPath) as? NewsTableViewCell
-        else {
-            return UITableViewCell()
+        let new = news[indexPath.section]
+        
+        if new.text != nil && indexPath.row == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: newsTableViewCellTextIdentifier, for: indexPath) as? NewsTableViewTextCell
+            else {
+                return UITableViewCell()
+            }
+            cell.configure(news: new)
+            
+            return cell
+        } else if new.urlImage != nil && indexPath.row == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: newsTableViewCellImageIdentifier, for: indexPath) as? NewsTableViewImageCell
+            else {
+                return UITableViewCell()
+            }
+            cell.configure(news: new)
+            
+            return cell
+        } else if new.text != nil && new.urlImage != nil && indexPath.row == 1 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: newsTableViewCellImageIdentifier, for: indexPath) as? NewsTableViewImageCell
+            else {
+                return UITableViewCell()
+            }
+            cell.configure(news: new)
+            
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: newsTableViewCellCountersIdentifier, for: indexPath) as? NewsTableViewCountersCell
+            else {
+                return UITableViewCell()
+            }
+            cell.configure(news: new)
+            
+            return cell
         }
-        
-        let new = news[indexPath.row]
-
-        cell.configure(news: new)
-        
-        return cell
     }
 }
