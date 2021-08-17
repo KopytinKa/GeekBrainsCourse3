@@ -9,16 +9,19 @@ import Foundation
 import Alamofire
 import DynamicJSON
 import FirebaseDatabase
+import PromiseKit
 
 class VKService {
     
     let baseUrl = "https://api.vk.com/method/"
     let version = "5.131"
     let realmService = RealmService()
+    let dispatchGroup = DispatchGroup()
+    let myQueue = OperationQueue()
     
     //MARK: - Возвращает список идентификаторов друзей пользователя или расширенную информацию о друзьях пользователя (при использовании параметра fields) https://vk.com/dev/friends.get
     
-    func getFriendsList(by userId: Int?, completion: @escaping () -> ()) {
+    func getFriendsList(by userId: Int?) {
         let method = "friends.get"
         
         var parameters: Parameters = [
@@ -47,9 +50,18 @@ class VKService {
             let friends = items.map { UserModel(data: $0) }
             
             self.realmService.add(models: friends)
-            
-            completion()
         }
+        let request = AF.request(url, method: .get, parameters: parameters)
+        let getDataOperation = GetDataOperation(request: request)
+        myQueue.addOperation(getDataOperation)
+        
+        let parseData = ParseFriendsData()
+        parseData.addDependency(getDataOperation)
+        myQueue.addOperation(parseData)
+        
+        let saveData = SaveDataToRealm()
+        saveData.addDependency(parseData)
+        OperationQueue.main.addOperation(saveData)
     }
     
     //MARK: - Возвращает список фотографий в альбоме https://vk.com/dev/photos.get
@@ -87,7 +99,7 @@ class VKService {
     
     //MARK: - Возвращает список сообществ указанного пользователя https://vk.com/dev/groups.get
     
-    func getGroupsList(by userId: Int?) {
+    func getGroupsList(by userId: Int?) -> Promise<[GroupModel]> {
         let method = "groups.get"
         
         var parameters: Parameters = [
@@ -106,15 +118,29 @@ class VKService {
         
         let url = baseUrl + method
         
-        AF.request(url, method: .get, parameters: parameters).responseData { [weak self] response in
-            guard let self = self else { return }
-            guard let data = response.value else { return }
-            guard let items = JSON(data).response.items.array else { return }
-
-            let groups = items.map { GroupModel(data: $0) }
-            
-            self.realmService.add(models: groups)            
+        let promise = Promise<[GroupModel]> { resolver in
+            AF.request(url, method: .get, parameters: parameters).responseData { response in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+                    
+                    if let errorMessage = json.error.error_msg.string {
+                        let error = VKServiceError.generalError(message: errorMessage)
+                        resolver.reject(error)
+                        return
+                    }
+                    
+                    guard let items = JSON(value).response.items.array else { return }
+                    let groups = items.map { GroupModel(data: $0) }
+                    resolver.fulfill(groups)
+                case .failure(let error):
+                    resolver.reject(error)
+                    return
+                }
+            }
         }
+        
+        return promise
     }
     
     //MARK: - Осуществляет поиск сообществ по заданной подстроке https://vk.com/dev/groups.search
@@ -173,14 +199,33 @@ class VKService {
         
         let url = baseUrl + method
         
-        AF.request(url, method: .get, parameters: parameters).responseData { response in
+        AF.request(url, method: .get, parameters: parameters).responseData { [weak self] response in
+            guard let self = self else { return }
             guard let data = response.value else { return }
             guard let items = JSON(data).response.items.array else { return }
             
+            let profiles = JSON(data).response.profiles.array ?? []
+            let groups = JSON(data).response.groups.array ?? []
+            
             for new in items {
-                let new = FirebaseNew(data: new)
-                let newRef = ref.child(Session.shared.userId).child(String(new.postId))
-                newRef.setValue(new.toAnyObject())
+                DispatchQueue.global().async(group: self.dispatchGroup) {
+                    print("new \(JSON(new).post_id.int ?? 0)")
+                    let new = FirebaseNew(data: new)
+                    let newRef = ref.child(Session.shared.userId).child(String(new.postId))
+                    newRef.setValue(new.toAnyObject())
+                }
+            }
+            
+            for profile in profiles {
+                DispatchQueue.global().async(group: self.dispatchGroup) {
+                    print("profile \(JSON(profile).id.int ?? 0)")
+                }
+            }
+            
+            for group in groups {
+                DispatchQueue.global().async(group: self.dispatchGroup) {
+                    print("group \(JSON(group).id.int ?? 0)")
+                }
             }
         }
     }

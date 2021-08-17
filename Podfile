@@ -14,5 +14,6 @@ target 'VKClient' do
   pod 'DynamicJSON'
   # pod 'Firebase/Auth'
   pod 'Firebase/Database'
+  pod 'PromiseKit'
 
 end
