@@ -1,18 +1,16 @@
 //
-//  NewsTableViewCell.swift
+//  NewsTableViewCountersCell.swift
 //  VKClient
 //
-//  Created by Кирилл Копытин on 31.05.2021.
+//  Created by Кирилл Копытин on 13.08.2021.
 //
 
 import UIKit
 
-class NewsTableViewCell: UITableViewCell {
+class NewsTableViewCountersCell: UITableViewCell {
     
     var likeFlag = false
-    
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var photoImageView: UIImageView!
+
     @IBOutlet weak var countLikesLabel: UILabel!
     @IBOutlet weak var countCommentsLabel: UILabel!
     @IBOutlet weak var countRepostsLabel: UILabel!
@@ -35,8 +33,6 @@ class NewsTableViewCell: UITableViewCell {
     }
     
     func clearCell() {
-        descriptionLabel.text = nil
-        photoImageView.image = nil
         countLikesLabel.text = nil
         countViewsLabel.text = nil
         countRepostsLabel.text = nil
@@ -46,14 +42,6 @@ class NewsTableViewCell: UITableViewCell {
     }
     
     func configure(news: FirebaseNew) {
-        if let image = news.urlImage {
-            photoImageView.sd_setImage(with: URL(string: image))
-        }
-        
-        if let description = news.text {
-            descriptionLabel.text = description
-        }
-        
         countLikesLabel.text = String(news.likesCount)
         countViewsLabel.text = String(news.viewsCount)
         countRepostsLabel.text = String(news.repostsCount)

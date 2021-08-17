@@ -37,7 +37,7 @@ class FirebaseNew {
                 if attachment.type.string == "photo" {
                     if let sizes = attachment.photo.sizes.array {
                         for size in sizes {
-                            if size.type.string == "x" {
+                            if size.type.string == "q" {
                                 self.urlImage = size.url.string
                             }
                         }
