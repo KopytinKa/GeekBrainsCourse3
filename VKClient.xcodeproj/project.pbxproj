@@ -25,6 +25,11 @@
 		8B65D8AF269DBDE300AE1D38 /* FirebaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8AE269DBDE300AE1D38 /* FirebaseUser.swift */; };
 		8B65D8B1269DC82400AE1D38 /* FirebaseGroupAdded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8B0269DC82400AE1D38 /* FirebaseGroupAdded.swift */; };
 		8B65D8B326A040B900AE1D38 /* FirebaseNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8B226A040B900AE1D38 /* FirebaseNew.swift */; };
+		8B65D8BE26C292D200AE1D38 /* VKServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8BD26C292D200AE1D38 /* VKServiceError.swift */; };
+		8B65D8B626C1752D00AE1D38 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8B526C1752D00AE1D38 /* AsyncOperation.swift */; };
+		8B65D8B826C177F400AE1D38 /* GetDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8B726C177F400AE1D38 /* GetDataOperation.swift */; };
+		8B65D8BA26C17A1600AE1D38 /* ParseFriendsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8B926C17A1600AE1D38 /* ParseFriendsData.swift */; };
+		8B65D8BC26C17C8C00AE1D38 /* SaveDataToRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65D8BB26C17C8C00AE1D38 /* SaveDataToRealm.swift */; };
 		8B6D97A0267372D40043D650 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6D979F267372D40043D650 /* GalleryViewController.swift */; };
 		8B6D97A3267392AF0043D650 /* GalleryHorisontalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6D97A2267392AF0043D650 /* GalleryHorisontalView.xib */; };
 		8B6D97A5267392BA0043D650 /* GalleryHorisontalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6D97A4267392BA0043D650 /* GalleryHorisontalView.swift */; };
@@ -72,6 +77,11 @@
 		8B65D8AE269DBDE300AE1D38 /* FirebaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUser.swift; sourceTree = "<group>"; };
 		8B65D8B0269DC82400AE1D38 /* FirebaseGroupAdded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseGroupAdded.swift; sourceTree = "<group>"; };
 		8B65D8B226A040B900AE1D38 /* FirebaseNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseNew.swift; sourceTree = "<group>"; };
+		8B65D8BD26C292D200AE1D38 /* VKServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKServiceError.swift; sourceTree = "<group>"; };
+		8B65D8B526C1752D00AE1D38 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
+		8B65D8B726C177F400AE1D38 /* GetDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDataOperation.swift; sourceTree = "<group>"; };
+		8B65D8B926C17A1600AE1D38 /* ParseFriendsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseFriendsData.swift; sourceTree = "<group>"; };
+		8B65D8BB26C17C8C00AE1D38 /* SaveDataToRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDataToRealm.swift; sourceTree = "<group>"; };
 		8B6D979F267372D40043D650 /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		8B6D97A2267392AF0043D650 /* GalleryHorisontalView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GalleryHorisontalView.xib; sourceTree = "<group>"; };
 		8B6D97A4267392BA0043D650 /* GalleryHorisontalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryHorisontalView.swift; sourceTree = "<group>"; };
@@ -166,6 +176,17 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		8B65D8B426C1751200AE1D38 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				8B65D8B526C1752D00AE1D38 /* AsyncOperation.swift */,
+				8B65D8B726C177F400AE1D38 /* GetDataOperation.swift */,
+				8B65D8B926C17A1600AE1D38 /* ParseFriendsData.swift */,
+				8B65D8BB26C17C8C00AE1D38 /* SaveDataToRealm.swift */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
 		8B6D97A12673926D0043D650 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +247,7 @@
 			children = (
 				8B6D97BD267CDF5E0043D650 /* VKService.swift */,
 				8B93965426935344006978FA /* RealmService.swift */,
+				8B65D8BD26C292D200AE1D38 /* VKServiceError.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -251,6 +273,7 @@
 		8B969B47264DACF400FD9FD1 /* VKClient */ = {
 			isa = PBXGroup;
 			children = (
+				8B65D8B426C1751200AE1D38 /* Operations */,
 				8B6D97BC267CDF230043D650 /* Services */,
 				8B6D97B7267BAACF0043D650 /* Controllers */,
 				8B6D97B6267BAA990043D650 /* Resources */,
@@ -398,7 +421,9 @@
 				8B5E659B266561B100783D15 /* NewsTableViewCell.swift in Sources */,
 				8B93964D268CA05E006978FA /* GroupModel.swift in Sources */,
 				8B969B5D264DAF7600FD9FD1 /* LoginFormViewController.swift in Sources */,
+				8B65D8BC26C17C8C00AE1D38 /* SaveDataToRealm.swift in Sources */,
 				8B65D8B326A040B900AE1D38 /* FirebaseNew.swift in Sources */,
+				8B65D8BE26C292D200AE1D38 /* VKServiceError.swift in Sources */,
 				8B65D8AF269DBDE300AE1D38 /* FirebaseUser.swift in Sources */,
 				8B6D97AC2678AA7A0043D650 /* NavigationPopAnimator.swift in Sources */,
 				8B5E65982665616E00783D15 /* NewsListViewController.swift in Sources */,
@@ -407,6 +432,7 @@
 				8B6D97B0267AADB00043D650 /* GalleryPushAnimator.swift in Sources */,
 				8B6D97B9267BAC970043D650 /* Session.swift in Sources */,
 				8B29F31D26557569000FAABE /* GroupTableViewCell.swift in Sources */,
+				8B65D8B826C177F400AE1D38 /* GetDataOperation.swift in Sources */,
 				8B29F31826557474000FAABE /* GroupsListViewController.swift in Sources */,
 				8B65D8B1269DC82400AE1D38 /* FirebaseGroupAdded.swift in Sources */,
 				8B969B4B264DACF400FD9FD1 /* SceneDelegate.swift in Sources */,
@@ -418,7 +444,9 @@
 				8B29F3272655B34F000FAABE /* FriendPhotosCollectionViewCell.swift in Sources */,
 				8B93964F268CA068006978FA /* PhotoModel.swift in Sources */,
 				8B6D97A72678A84B0043D650 /* NavigationController.swift in Sources */,
+				8B65D8B626C1752D00AE1D38 /* AsyncOperation.swift in Sources */,
 				8B29F335265D9869000FAABE /* BackImageView.swift in Sources */,
+				8B65D8BA26C17A1600AE1D38 /* ParseFriendsData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
