@@ -178,7 +178,7 @@ class VKService {
     
     //MARK: - Возвращает данные, необходимые для показа списка новостей для текущего пользователя https://vk.com/dev/newsfeed.get
     
-    func getNewsfeed(startTime: Int? = nil) {
+    func getNewsfeed(startTime: Int? = nil, startFrom: String? = nil, completion: @escaping (String) -> ()) {
         let method = "newsfeed.get"
         let ref = Database.database().reference(withPath: "news")
         
@@ -188,7 +188,6 @@ class VKService {
             //"end_time": ,
             //"max_photos": ,
             //"source_ids": ,
-            //"start_from": ,
             "count": "10",
             //"fields": ,
             //"section": ,
@@ -200,6 +199,10 @@ class VKService {
             parameters["start_time"] = startTime
         }
         
+        if let startFrom = startFrom {
+            parameters["start_from"] = startFrom
+        }
+        
         let url = baseUrl + method
         
         AF.request(url, method: .get, parameters: parameters).responseData { [weak self] response in
@@ -209,6 +212,7 @@ class VKService {
             
             let profiles = JSON(data).response.profiles.array ?? []
             let groups = JSON(data).response.groups.array ?? []
+            let nextFrom = JSON(data).response.next_from.string ?? ""
             
             for new in items {
                 DispatchQueue.global().async(group: self.dispatchGroup) {
@@ -230,6 +234,12 @@ class VKService {
                     print("group \(JSON(group).id.int ?? 0)")
                 }
             }
+            self.dispatchGroup.notify(queue: .global()) {
+                DispatchQueue.main.async {
+                    completion(nextFrom)
+                }
+            }
+
         }
     }
 }

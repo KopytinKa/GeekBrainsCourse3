@@ -20,6 +20,9 @@ class NewsListViewController: UIViewController {
     
     private var news = [FirebaseNew]()
     private let ref = Database.database().reference(withPath: "news/\(Session.shared.userId)")
+    
+    var nextFrom = ""
+    var isLoading = false
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +31,7 @@ class NewsListViewController: UIViewController {
         setupRefreshControl()
 
         newsTableView.dataSource = self
+        newsTableView.prefetchDataSource = self
         
         newsTableView.register(UINib(nibName: "NewsTableViewTextCell", bundle: nil), forCellReuseIdentifier: newsTableViewCellTextIdentifier)
         newsTableView.register(UINib(nibName: "NewsTableViewImageCell", bundle: nil), forCellReuseIdentifier: newsTableViewCellImageIdentifier)
@@ -47,13 +51,19 @@ class NewsListViewController: UIViewController {
         
         let mostFreshNewsDate = self.news.first?.date ?? Int(Date().timeIntervalSince1970)
         
-        apiVKService.getNewsfeed(startTime: mostFreshNewsDate)
+        apiVKService.getNewsfeed(startTime: mostFreshNewsDate) { [weak self] nextFrom in
+            guard let self = self else { return }
+            self.nextFrom = nextFrom
+        }
         
         newsTableView.refreshControl?.endRefreshing()
     }
     
     func setNews() {
-        apiVKService.getNewsfeed()
+        apiVKService.getNewsfeed() { [weak self] nextFrom in
+            guard let self = self else { return }
+            self.nextFrom = nextFrom
+        }
         
         ref.observe(.value, with: { [weak self] snapshot in
             guard let self = self else { return }
@@ -66,7 +76,7 @@ class NewsListViewController: UIViewController {
                 }
             }
             
-            news.sort(by: { $0.date > $1.date } )
+            news.sort(by: { $0.date > $1.date })
             
             self.news = news
             self.newsTableView.reloadData()
@@ -121,6 +131,23 @@ extension NewsListViewController: UITableViewDataSource {
             cell.configure(news: new)
             
             return cell
+        }
+    }
+}
+
+extension NewsListViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        guard let maxSection = indexPaths.map({ $0.section }).max() else { return }
+        
+        if maxSection > news.count - 3, !isLoading {
+            isLoading = true
+            
+            apiVKService.getNewsfeed(startFrom: nextFrom) { [weak self] nextFrom in
+                guard let self = self else { return }
+                self.nextFrom = nextFrom
+                
+                self.isLoading = false
+            }
         }
     }
 }
