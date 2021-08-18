@@ -20,16 +20,36 @@ class NewsListViewController: UIViewController {
     
     private var news = [FirebaseNew]()
     private let ref = Database.database().reference(withPath: "news/\(Session.shared.userId)")
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setNews()
+        setupRefreshControl()
 
         newsTableView.dataSource = self
+        
         newsTableView.register(UINib(nibName: "NewsTableViewTextCell", bundle: nil), forCellReuseIdentifier: newsTableViewCellTextIdentifier)
         newsTableView.register(UINib(nibName: "NewsTableViewImageCell", bundle: nil), forCellReuseIdentifier: newsTableViewCellImageIdentifier)
         newsTableView.register(UINib(nibName: "NewsTableViewCountersCell", bundle: nil), forCellReuseIdentifier: newsTableViewCellCountersIdentifier)
+    }
+    
+    fileprivate func setupRefreshControl() {
+        newsTableView.refreshControl = UIRefreshControl()
+        
+        newsTableView.refreshControl?.attributedTitle = NSAttributedString(string: "Обновление...")
+        newsTableView.refreshControl?.tintColor = #colorLiteral(red: 0, green: 0.7406748533, blue: 0.9497854114, alpha: 1)
+        newsTableView.refreshControl?.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
+    }
+    
+    @objc func refreshNews() {
+        newsTableView.refreshControl?.beginRefreshing()
+        
+        let mostFreshNewsDate = self.news.first?.date ?? Int(Date().timeIntervalSince1970)
+        
+        apiVKService.getNewsfeed(startTime: mostFreshNewsDate)
+        
+        newsTableView.refreshControl?.endRefreshing()
     }
     
     func setNews() {
@@ -45,6 +65,8 @@ class NewsListViewController: UIViewController {
                        news.append(new)
                 }
             }
+            
+            news.sort(by: { $0.date > $1.date } )
             
             self.news = news
             self.newsTableView.reloadData()

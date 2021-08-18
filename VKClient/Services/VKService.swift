@@ -178,14 +178,13 @@ class VKService {
     
     //MARK: - Возвращает данные, необходимые для показа списка новостей для текущего пользователя https://vk.com/dev/newsfeed.get
     
-    func getNewsfeed() {
+    func getNewsfeed(startTime: Int? = nil) {
         let method = "newsfeed.get"
         let ref = Database.database().reference(withPath: "news")
         
-        let parameters: Parameters = [
+        var parameters: Parameters = [
             "filters": "post",
             //"return_banned": ,
-            //"start_time": ,
             //"end_time": ,
             //"max_photos": ,
             //"source_ids": ,
@@ -196,6 +195,10 @@ class VKService {
             "access_token": Session.shared.token,
             "v": version
         ]
+        
+        if let startTime = startTime {
+            parameters["start_time"] = startTime
+        }
         
         let url = baseUrl + method
         
