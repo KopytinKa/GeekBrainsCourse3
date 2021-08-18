@@ -32,6 +32,7 @@ class NewsListViewController: UIViewController {
 
         newsTableView.dataSource = self
         newsTableView.prefetchDataSource = self
+        newsTableView.delegate = self
         
         newsTableView.register(UINib(nibName: "NewsTableViewTextCell", bundle: nil), forCellReuseIdentifier: newsTableViewCellTextIdentifier)
         newsTableView.register(UINib(nibName: "NewsTableViewImageCell", bundle: nil), forCellReuseIdentifier: newsTableViewCellImageIdentifier)
@@ -84,7 +85,7 @@ class NewsListViewController: UIViewController {
     }
 }
 
-extension NewsListViewController: UITableViewDataSource {
+extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return news.count
     }
@@ -94,6 +95,19 @@ extension NewsListViewController: UITableViewDataSource {
         if news[section].text != nil { rows += 1}
         if news[section].urlImage != nil { rows += 1}
         return rows
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let new = news[indexPath.section]
+        
+        if (new.text == nil && new.urlImage != nil && indexPath.row == 0 ) ||
+            (new.text != nil && new.urlImage != nil && indexPath.row == 1) {
+            let tableWidth = tableView.bounds.width
+            let cellHeight = tableWidth * new.aspectRatio
+            return cellHeight
+        } else {
+            return UITableView.automaticDimension
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

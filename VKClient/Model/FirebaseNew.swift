@@ -19,7 +19,11 @@ class FirebaseNew {
     let repostsCount: Int
     let viewsCount: Int
     var urlImage: String?
+    var heightImage: Int?
+    var widthImage: Int?
     let ref: DatabaseReference?
+    
+    var aspectRatio: CGFloat { return CGFloat(heightImage ?? 1) / CGFloat(widthImage ?? 1) }
     
     init(data: JSON) {
         self.ref = nil
@@ -37,8 +41,10 @@ class FirebaseNew {
                 if attachment.type.string == "photo" {
                     if let sizes = attachment.photo.sizes.array {
                         for size in sizes {
-                            if size.type.string == "q" {
+                            if size.type.string == "x" {
                                 self.urlImage = size.url.string
+                                self.heightImage = size.height.int
+                                self.widthImage = size.width.int
                             }
                         }
                     }
@@ -71,6 +77,8 @@ class FirebaseNew {
         self.repostsCount = repostsCount
         self.viewsCount = viewsCount
         self.urlImage = value["urlImage"] as? String
+        self.heightImage = value["heightImage"] as? Int
+        self.widthImage = value["widthImage"] as? Int
     }
     
     func toAnyObject() -> [String: Any?] {
@@ -83,7 +91,9 @@ class FirebaseNew {
             "userLikes": userLikes,
             "repostsCount": repostsCount,
             "viewsCount": viewsCount,
-            "urlImage": urlImage
+            "urlImage": urlImage,
+            "heightImage": heightImage,
+            "widthImage": widthImage,
         ]
     }
 }

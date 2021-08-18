@@ -239,7 +239,6 @@ class VKService {
                     completion(nextFrom)
                 }
             }
-
         }
     }
 }
