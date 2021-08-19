@@ -34,6 +34,8 @@ class NewsListViewController: UIViewController {
         newsTableView.prefetchDataSource = self
         newsTableView.delegate = self
         
+        newsTableView.allowsSelection = false
+        
         newsTableView.register(UINib(nibName: "NewsTableViewTextCell", bundle: nil), forCellReuseIdentifier: newsTableViewCellTextIdentifier)
         newsTableView.register(UINib(nibName: "NewsTableViewImageCell", bundle: nil), forCellReuseIdentifier: newsTableViewCellImageIdentifier)
         newsTableView.register(UINib(nibName: "NewsTableViewCountersCell", bundle: nil), forCellReuseIdentifier: newsTableViewCellCountersIdentifier)
@@ -79,6 +81,8 @@ class NewsListViewController: UIViewController {
             
             news.sort(by: { $0.date > $1.date })
             
+            news.forEach({ $0.calculateTextHeight(from: self.view.frame.width)})
+            
             self.news = news
             self.newsTableView.reloadData()
         })
@@ -100,10 +104,19 @@ extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let new = news[indexPath.section]
         
-        if (new.text == nil && new.urlImage != nil && indexPath.row == 0 ) ||
+        if new.text != nil && indexPath.row == 0 {
+
+            if new.heightText < NewsTableViewTextCell.defaultTextHeight {
+                return new.heightText + NewsTableViewTextCell.smallIndent
+            } else if new.isExpanded {
+                return new.heightText + NewsTableViewTextCell.buttonHeight + NewsTableViewTextCell.smallIndent * 2
+            } else {
+                return NewsTableViewTextCell.defaultTextHeight + NewsTableViewTextCell.buttonHeight + NewsTableViewTextCell.smallIndent * 2
+            }
+        } else if (new.text == nil && new.urlImage != nil && indexPath.row == 0 ) ||
             (new.text != nil && new.urlImage != nil && indexPath.row == 1) {
             let tableWidth = tableView.bounds.width
-            let cellHeight = tableWidth * new.aspectRatio
+            let cellHeight = tableWidth * new.aspectRatio + NewsTableViewImageCell.smallIndent
             return cellHeight
         } else {
             return UITableView.automaticDimension
@@ -118,6 +131,7 @@ extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
             else {
                 return UITableViewCell()
             }
+            cell.delegate = self
             cell.configure(news: new)
             
             return cell
@@ -127,7 +141,7 @@ extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
                 return UITableViewCell()
             }
             cell.configure(news: new)
-            
+
             return cell
         } else if new.text != nil && new.urlImage != nil && indexPath.row == 1 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: newsTableViewCellImageIdentifier, for: indexPath) as? NewsTableViewImageCell
@@ -135,7 +149,7 @@ extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
                 return UITableViewCell()
             }
             cell.configure(news: new)
-            
+
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: newsTableViewCellCountersIdentifier, for: indexPath) as? NewsTableViewCountersCell
@@ -163,5 +177,16 @@ extension NewsListViewController: UITableViewDataSourcePrefetching {
                 self.isLoading = false
             }
         }
+    }
+}
+
+extension NewsListViewController: NewsTableViewTextCellDelegate {
+    func showMoreAction(cell: NewsTableViewTextCell) {
+        guard let indexPath = newsTableView.indexPath(for: cell) else { return }
+        let new = news[indexPath.section]
+        
+        new.isExpanded = !new.isExpanded
+
+        newsTableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
