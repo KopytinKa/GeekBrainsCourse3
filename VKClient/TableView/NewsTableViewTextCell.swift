@@ -38,11 +38,11 @@ class NewsTableViewTextCell: UITableViewCell {
     }
     
     func descriptionLabelFrame(height: CGFloat) {
-        descriptionLabel.frame = CGRect(x: NewsTableViewTextCell.smallIndent, y: NewsTableViewTextCell.smallIndent, width: contentView.frame.width - NewsTableViewTextCell.smallIndent * 2, height: height)
+        descriptionLabel.frame = CGRect(x: Self.smallIndent, y: Self.smallIndent, width: contentView.frame.width - Self.smallIndent * 2, height: height)
     }
     
     func shomMoreButtonFrame(title: String) {
-        showMoreOrLessButton.frame = CGRect(x: NewsTableViewTextCell.smallIndent, y: descriptionLabel.frame.maxY + NewsTableViewTextCell.smallIndent, width: NewsTableViewTextCell.buttonWidth, height: NewsTableViewTextCell.buttonHeight)
+        showMoreOrLessButton.frame = CGRect(x: Self.smallIndent, y: descriptionLabel.frame.maxY + Self.smallIndent, width: Self.buttonWidth, height: Self.buttonHeight)
         showMoreOrLessButton.isHidden = false
         showMoreOrLessButton.backgroundColor = #colorLiteral(red: 0, green: 0.7406748533, blue: 0.9497854114, alpha: 1)
         showMoreOrLessButton.setTitle(title, for: .normal)
@@ -60,13 +60,13 @@ class NewsTableViewTextCell: UITableViewCell {
         if let description = news.text {
             descriptionLabel.text = description
 
-            if news.heightText < NewsTableViewTextCell.defaultTextHeight || news.isExpanded {
+            if news.heightText < Self.defaultTextHeight || news.isExpanded {
                 descriptionLabelFrame(height: news.heightText)
                 if news.isExpanded {
                     shomMoreButtonFrame(title: "Скрыть")
                 }
             } else {
-                descriptionLabelFrame(height: NewsTableViewTextCell.defaultTextHeight)
+                descriptionLabelFrame(height: Self.defaultTextHeight)
                 shomMoreButtonFrame(title: "Показать")
             }
         } 

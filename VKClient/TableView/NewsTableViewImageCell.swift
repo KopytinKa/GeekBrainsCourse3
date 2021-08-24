@@ -18,7 +18,7 @@ class NewsTableViewImageCell: UITableViewCell {
     }
     
     func photoImageViewFrame(height: CGFloat) {
-        photoImageView.frame = CGRect(x: 0, y: NewsTableViewImageCell.smallIndent, width: contentView.frame.width, height: height)
+        photoImageView.frame = CGRect(x: 0, y: Self.smallIndent, width: contentView.frame.width, height: height)
     }
     
     func setup() {
