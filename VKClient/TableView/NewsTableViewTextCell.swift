@@ -7,13 +7,13 @@
 
 import UIKit
 
-protocol NewsTableViewTextCellDelegate {
-    func showMoreAction(cell: NewsTableViewTextCell)
+protocol NewsTableViewTextCellDelegate: AnyObject {
+    func showMoreAction(_ cell: NewsTableViewTextCell)
 }
 
 class NewsTableViewTextCell: UITableViewCell {
     
-    var delegate: NewsTableViewTextCellDelegate?
+    weak var delegate: NewsTableViewTextCellDelegate?
         
     static let smallIndent: CGFloat = 5.0
     
@@ -34,7 +34,7 @@ class NewsTableViewTextCell: UITableViewCell {
     }
     
     @IBAction func showMoreOrLessAction(_ sender: Any) {
-        delegate?.showMoreAction(cell: self)
+        delegate?.showMoreAction(self)
     }
     
     func descriptionLabelFrame(height: CGFloat) {

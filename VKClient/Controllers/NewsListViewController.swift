@@ -181,7 +181,7 @@ extension NewsListViewController: UITableViewDataSourcePrefetching {
 }
 
 extension NewsListViewController: NewsTableViewTextCellDelegate {
-    func showMoreAction(cell: NewsTableViewTextCell) {
+    func showMoreAction(_ cell: NewsTableViewTextCell) {
         guard let indexPath = newsTableView.indexPath(for: cell) else { return }
         let new = news[indexPath.section]
         
