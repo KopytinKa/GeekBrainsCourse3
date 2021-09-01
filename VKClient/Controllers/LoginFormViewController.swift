@@ -18,6 +18,8 @@ class LoginFormViewController: UIViewController {
     @IBOutlet weak var bluePoint: UIView!
     @IBOutlet weak var orangePoint: UIView!
     
+    let loginService = LoginService()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,23 +70,14 @@ class LoginFormViewController: UIViewController {
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        let checkResult = checkUserData()
+        guard let login = loginInput.text, let password = passwordInput.text else { return false }
+        let checkResult = loginService.checkUserData(login: login, password: password)
         
         if !checkResult {
             showLoginError()
         }
         
         return checkResult
-    }
-    
-    func checkUserData() -> Bool {
-        guard let login = loginInput.text, let password = passwordInput.text else { return false }
-        
-        if login == "a" && password == "a" {
-            return true
-        } else {
-            return false
-        }
     }
     
     func showLoginError() {
