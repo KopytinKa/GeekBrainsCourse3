@@ -107,7 +107,7 @@
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fSD-Q1-wUI">
                                         <rect key="frame" x="107" y="460.5" width="200" height="36"/>
-                                        <color key="backgroundColor" red="0.43559703862448584" green="0.72021720636016884" blue="0.91161745907080294" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.32549020649999999" green="0.72941178080000002" blue="0.92941176889999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="5Q1-yh-GHg"/>
                                         </constraints>
