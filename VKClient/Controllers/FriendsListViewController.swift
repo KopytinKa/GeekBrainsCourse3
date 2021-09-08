@@ -15,36 +15,30 @@ class FriendsListViewController: UIViewController {
     let friendTableViewCellIdentifier = "FriendTableViewCellIdentifier"
     let fromFriendsListToFriendsPhotosSegueIdentifier = "fromFriendsListToFriendsPhotos"
     
-    let apiVKService = VKService()
-    let realmService = RealmService()
+    let apiVKService = UserAdapter()
     
-    var friends = [UserModel]()
-    var searchFriends = [UserModel]()
+    var friends = [User]()
+    var searchFriends = [User]()
     
     var searchFlag = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setFriends()
-
+        apiVKService.getFriends(by: nil) { [weak self] friends in
+            guard let self = self else { return }
+            self.friends = friends
+            self.friendsListTableView.reloadData()
+        }
+        
         friendsListTableView.dataSource = self
         friendsListTableView.delegate = self
         friendsListTableView.register(UINib(nibName: "FriendTableViewCell", bundle: nil), forCellReuseIdentifier: friendTableViewCellIdentifier)
         
         searchBar.delegate = self
     }
-    
-    func setFriends() {
-        apiVKService.getFriendsList(by: nil)
-        
-        if let friends = self.realmService.read(object: UserModel.self) as? [UserModel] {
-            self.friends = friends
-            self.friendsListTableView.reloadData()
-        }
-    }
-    
-    func getMyFriends() -> [UserModel] {
+
+    func getMyFriends() -> [User] {
         if searchFlag {
             return searchFriends
         }
@@ -67,8 +61,8 @@ class FriendsListViewController: UIViewController {
         return resultArray
     }
     
-    func arrayByLetter(letter: String) -> [UserModel] {
-        var resultArray = [UserModel]()
+    func arrayByLetter(letter: String) -> [User] {
+        var resultArray = [User]()
         
         for friend in getMyFriends() {
             let nameLetter = String(friend.getFullName().prefix(1))
