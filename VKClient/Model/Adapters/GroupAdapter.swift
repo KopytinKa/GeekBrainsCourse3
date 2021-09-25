@@ -10,7 +10,7 @@ import RealmSwift
 import PromiseKit
 
 final class GroupAdapter {
-    private let apiVKService = VKService()
+    private let apiVKService = VKServiceProxy(VKService())
     private let realmService = RealmService()
     
     private var token: NotificationToken?

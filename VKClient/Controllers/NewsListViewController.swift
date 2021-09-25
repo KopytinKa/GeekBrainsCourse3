@@ -16,7 +16,7 @@ class NewsListViewController: UIViewController {
     let newsTableViewCellImageIdentifier = "NewsTableViewCellImageIdentifier"
     let newsTableViewCellCountersIdentifier = "NewsTableViewCellCountersIdentifier"
     
-    let apiVKService = VKService()
+    let apiVKService = VKServiceProxy(VKService())
     
     private var news = [FirebaseNew]()
     private let ref = Database.database().reference(withPath: "news/\(Session.shared.userId)")
