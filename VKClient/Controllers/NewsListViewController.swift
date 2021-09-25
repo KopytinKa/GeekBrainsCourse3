@@ -21,6 +21,9 @@ class NewsListViewController: UIViewController {
     private var news = [FirebaseNew]()
     private let ref = Database.database().reference(withPath: "news/\(Session.shared.userId)")
     
+    private let viewModelFactory = NewViewModelFactory()
+    private var viewModels = [NewViewModel]()
+    
     var nextFrom = ""
     var isLoading = false
         
@@ -45,7 +48,7 @@ class NewsListViewController: UIViewController {
         newsTableView.refreshControl = UIRefreshControl()
         
         newsTableView.refreshControl?.attributedTitle = NSAttributedString(string: "Обновление...")
-        newsTableView.refreshControl?.tintColor = #colorLiteral(red: 0, green: 0.7406748533, blue: 0.9497854114, alpha: 1)
+        newsTableView.refreshControl?.tintColor = Styles.brandLightBlue
         newsTableView.refreshControl?.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
     }
     
@@ -80,10 +83,10 @@ class NewsListViewController: UIViewController {
             }
             
             news.sort(by: { $0.date > $1.date })
-            
-            news.forEach({ $0.calculateTextHeight(from: self.view.frame.width)})
-            
+                        
             self.news = news
+            self.viewModels = self.viewModelFactory.constructViewModels(from: news)
+            self.viewModels.forEach({ $0.calculateTextHeight(from: self.view.frame.width)})
             self.newsTableView.reloadData()
         })
     }
@@ -91,18 +94,18 @@ class NewsListViewController: UIViewController {
 
 extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return news.count
+        return viewModels.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rows = 1
-        if news[section].text != nil { rows += 1}
-        if news[section].urlImage != nil { rows += 1}
+        if viewModels[section].text != nil { rows += 1}
+        if viewModels[section].image != nil { rows += 1}
         return rows
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let new = news[indexPath.section]
+        let new = viewModels[indexPath.section]
         
         if new.text != nil && indexPath.row == 0 {
 
@@ -113,8 +116,8 @@ extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 return NewsTableViewTextCell.defaultTextHeight + NewsTableViewTextCell.buttonHeight + NewsTableViewTextCell.smallIndent * 2
             }
-        } else if (new.text == nil && new.urlImage != nil && indexPath.row == 0 ) ||
-            (new.text != nil && new.urlImage != nil && indexPath.row == 1) {
+        } else if (new.text == nil && new.image != nil && indexPath.row == 0 ) ||
+            (new.text != nil && new.image != nil && indexPath.row == 1) {
             let tableWidth = tableView.bounds.width
             let cellHeight = tableWidth * new.aspectRatio + NewsTableViewImageCell.smallIndent
             return cellHeight
@@ -124,7 +127,7 @@ extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let new = news[indexPath.section]
+        let new = viewModels[indexPath.section]
         
         if new.text != nil && indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: newsTableViewCellTextIdentifier, for: indexPath) as? NewsTableViewTextCell
@@ -135,7 +138,7 @@ extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
             cell.configure(news: new)
             
             return cell
-        } else if new.urlImage != nil && indexPath.row == 0 {
+        } else if new.image != nil && indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: newsTableViewCellImageIdentifier, for: indexPath) as? NewsTableViewImageCell
             else {
                 return UITableViewCell()
@@ -143,7 +146,7 @@ extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
             cell.configure(news: new)
 
             return cell
-        } else if new.text != nil && new.urlImage != nil && indexPath.row == 1 {
+        } else if new.text != nil && new.image != nil && indexPath.row == 1 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: newsTableViewCellImageIdentifier, for: indexPath) as? NewsTableViewImageCell
             else {
                 return UITableViewCell()
@@ -167,7 +170,7 @@ extension NewsListViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard let maxSection = indexPaths.map({ $0.section }).max() else { return }
         
-        if maxSection > news.count - 3, !isLoading {
+        if maxSection > viewModels.count - 3, !isLoading {
             isLoading = true
             
             apiVKService.getNewsfeed(startFrom: nextFrom) { [weak self] nextFrom in
@@ -183,7 +186,7 @@ extension NewsListViewController: UITableViewDataSourcePrefetching {
 extension NewsListViewController: NewsTableViewTextCellDelegate {
     func showMoreAction(_ cell: NewsTableViewTextCell) {
         guard let indexPath = newsTableView.indexPath(for: cell) else { return }
-        let new = news[indexPath.section]
+        let new = viewModels[indexPath.section]
         
         new.isExpanded = !new.isExpanded
 

@@ -42,15 +42,6 @@ class VKService {
         
         let url = baseUrl + method
         
-        AF.request(url, method: .get, parameters: parameters).responseData { [weak self] response in
-            guard let self = self else { return }
-            guard let data = response.value else { return }
-            guard let items = JSON(data).response.items.array else { return }
-
-            let friends = items.map { UserModel(data: $0) }
-            
-            self.realmService.add(models: friends)
-        }
         let request = AF.request(url, method: .get, parameters: parameters)
         let getDataOperation = GetDataOperation(request: request)
         myQueue.addOperation(getDataOperation)

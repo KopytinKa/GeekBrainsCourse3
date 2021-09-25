@@ -15,9 +15,9 @@ class GroupsSearchViewController: UIViewController {
     let groupTableViewCellIdentifier = "GroupTableViewCellIdentifier"
     let addGroupSegueIdentifier = "addGroup"
     
-    let apiVKService = VKService()
+    let apiVKService = GroupAdapter()
     
-    var searchGroups = [GroupModel]()
+    var searchGroups = [Group]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

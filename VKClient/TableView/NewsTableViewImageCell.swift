@@ -28,8 +28,8 @@ class NewsTableViewImageCell: UITableViewCell {
         photoImageView.image = nil
     }
     
-    func configure(news: FirebaseNew) {
-        if let image = news.urlImage {
+    func configure(news: NewViewModel) {
+        if let image = news.image {
             photoImageView.sd_setImage(with: URL(string: image))
         }
         

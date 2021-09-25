@@ -20,7 +20,7 @@ class GroupTableViewCell: UITableViewCell {
         nameLabel.text = nil
     }
     
-    func configure(group: GroupModel) {
+    func configure(group: Group) {
         nameLabel.text = group.name
         avatarImageView.sd_setImage(with: URL(string: group.avatar), placeholderImage: UIImage(named: "community"))
     }
